@@ -12,15 +12,11 @@ BLANCLAIR="\\033[1;08m"
 JAUNE="\\033[1;33m"
 CYAN="\\033[1;36m"
 
-# Answer
+# Value
 
-YES="yes"
 NO="no"
+YES="yes"
 
-# All actions to perform
-
-ACTION=""
-RESPONSE=""
 ACTION_LOG="log"
 ACTION_TAG="tag"
 ACTION_INIT="init"
@@ -38,24 +34,22 @@ ACTION_RENAME="rename"
 ACTION_CREATE_BRANCH="create"
 ACTION_DELETE_BRANCH="delete"
 
+NAME_AXEL="Axel"
+AUTHOR_NAME_AXEL="Axel Vaindal"
+AUTHOR_EMAIL_AXEL="pro.axelvaindal@gmail.com"
 
-# Branch variables
+# Variables
 
+ACTION=""
+AUTHOR=""
+RESPONSE=""
+FILENAME=""
+AUTHOR_EMAIL=""
 LOCAL_BRANCH_NAME=""
 DISTANT_BRANCH_NAME=""
 
 # User information
 
-AUTHOR=""
-AUTHOR_EMAIL=""
-AUTHOR_NAME_AXEL="Axel Vaindal"
-
-# Email
-
-AUTHOR_EMAIL_AXEL="pro.axelvaindal@"
-
-# Distant information needed
-NAME_AXEL="Axel"
 
 ####### Opening Message ###########
 
@@ -70,4 +64,10 @@ if [ "$ACTION" = "$ACTION_LOG" ];then
 	echo "$CYAN\nDisplaying repository log:"
 	echo "------------------------------------------"
 	git log
+	echo "$CYAN\nDo you want to save these logs in a file ? $NORMAL"
+	read RESPONSE
+	if [ "$RESPONSE" = "$YES" ]; then
+		echo "$CYAN\nPlease, enter filename : $NORMAL"
+		read FILENAME
+		echo ""
 fi
