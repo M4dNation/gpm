@@ -262,6 +262,7 @@ commit()
 		if [ "$RESPONSE" = "$YES" ]; then
 			add
 		fi
+		echo "$CYAN"
 		echo "You are about to make a commit on your current branch."
 		echo "Would you like to see all information about the commit ? $NORMAL"
 		read RESPONSE
