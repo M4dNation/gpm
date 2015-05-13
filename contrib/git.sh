@@ -293,6 +293,13 @@ commit()
 		read RESPONSE
 		if [ "$RESPONSE" = "$YES" ]; then
 			git add .
+		else
+			echo "$CYAN"
+			echo "Would you like to add files to be commited ? $NORMAL"
+			read RESPONSE
+			if [ "$RESPONSE" = "$YES" ]; then
+				add
+			fi
 		fi
 		echo "$CYAN"
 		echo "You are about to make a commit on your current branch."
