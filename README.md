@@ -9,6 +9,10 @@ with a question/answer configuration without knowing any command. Many functionn
 
 GPM is maintained by Axel Vaindal.
 
+## Contributors
+
+There is actually no other contributors for this project. If you want to contribute, feel free to make any suggestions you want or to contact me.
+
 ## LICENCE
 
 GPM is available under the terms of the GNU GENERAL PUBLIC LICENSE. Check the licence file for more details.
