@@ -39,7 +39,7 @@ AUTHOR_NAME_AXEL="Axel Vaindal"
 AUTHOR_EMAIL_AXEL="pro.axelvaindal@gmail.com"
 
 # Variables
-
+LOOP=1
 ACTION=""
 AUTHOR=""
 RESPONSE=""
@@ -53,21 +53,54 @@ DISTANT_BRANCH_NAME=""
 
 ####### Opening Message ###########
 
-echo "$ROUGE\nWelcome in the git project manager ! Who are you ? $NORMAL"
+echo "$CYAN"
+echo "Welcome in the git project manager ! Who are you ? $NORMAL"
 read AUTHOR
 
-echo "$ROUGE"
-echo "Hi, $AUTHOR ! What do you want to do ? $NORMAL"
-read ACTION
+while [ $LOOP -gt 0 ]; do
+	echo "$CYAN"
+	echo "Hi, $AUTHOR ! What do you want to do ? $NORMAL"
+	read ACTION
 
-if [ "$ACTION" = "$ACTION_LOG" ];then
-	echo "$CYAN\nDisplaying repository log:"
+	################## LOG ACTION ###################################
+	if [ "$ACTION" = "$ACTION_LOG" ];then
+		log
+	fi
+	################## LOG ACTION ###################################
+	LOOP=0
+done
+
+function log 
+{
+	echo "$CYAN"
+	echo "Displaying repository log:"
 	echo "------------------------------------------"
 	git log
-	echo "$CYAN\nDo you want to save these logs in a file ? $NORMAL"
+	echo "$CYAN"
+	echo "------------------------------------------"
+	echo "Do you want to save these logs in a file ? $NORMAL"
 	read RESPONSE
 	if [ "$RESPONSE" = "$YES" ]; then
-		echo "$CYAN\nPlease, enter filename : $NORMAL"
+		echo "$CYAN"
+		echo "Please, enter filename : $NORMAL"
 		read FILENAME
-		echo ""
-fi
+		echo "$CYAN"
+		echo "Erase content of $FILENAME ? $NORMAL"
+		read RESPONSE
+		if [ "$RESPONSE" = "$YES" ];then
+			echo "$CYAN"
+			echo "You are about to save git logs in $FILENAME deleting all its content, are you sure ? $NORMAL"
+			read RESPONSE
+			if [ "$RESPONSE" = "$YES" ];then
+				git log > $FILENAME
+			fi
+		else
+			echo "$CYAN"
+			echo "You are about to add git logs to $FILENAME, are you sure ? $NORMAL"
+			read RESPONSE
+			if [ "$RESPONSE" = "$YES" ];then
+				git log >> $FILENAME
+			fi
+		fi
+	fi
+}
