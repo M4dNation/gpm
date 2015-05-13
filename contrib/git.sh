@@ -132,7 +132,7 @@ push()
 		echo "$CYAN"
 		echo "Please, enter a remote branch to push code on : $NORMAL"
 		read REMOTE_BRANCH_NAME
-		git push origin REMOTE_BRANCH_NAME
+		git push origin "$REMOTE_BRANCH_NAME"
 		echo "$VERT"
 		echo "Content successfully pushed on branch $REMOTE_BRANCH_NAME ! $NORMAL"
 	else
@@ -288,7 +288,8 @@ commit()
 			echo "$VERT"
 			echo "Modification successfully commited and pushed on the remote branch $REMOTE_BRANCH_NAME ! $NORMAL"
 		else
-			git commit -m "$COMMIT_DESCRIPTION" "$OPTIONS"
+			git add .
+			git commit --all -m "$COMMIT_DESCRIPTION"
 			echo "$VERT"
 			echo "Modification successfully commited ! $NORMAL"
 		fi
