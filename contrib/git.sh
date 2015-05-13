@@ -178,6 +178,11 @@ pull()
 {
 	if [ -d .git ]; then
 		echo "$CYAN"
+		echo "Please, enter a remote branch to pull code from : $NORMAL"
+		read REMOTE_BRANCH_NAME
+		git pull origin "$REMOTE_BRANCH_NAME"
+		echo "$VERT"
+		echo "Content successfully pulled from branch $REMOTE_BRANCH_NAME ! $NORMAL"
 	else
 		echo "$ROUGE"
 		echo "This directory isn't a git repository."
