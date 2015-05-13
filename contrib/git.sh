@@ -269,7 +269,6 @@ commit()
 		if [ "$RESPONSE" = "$YES" ]; then
 			echo "\nCommit description"
 			echo "--------------------------------------"
-			echo "Commit on current branch with options : $OPTIONS"
 			echo "$COMMIT_DESCRIPTION"
 			git status
 		fi
