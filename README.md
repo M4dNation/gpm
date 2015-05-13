@@ -15,7 +15,14 @@ GPM is available under the terms of the GNU GENERAL PUBLIC LICENSE. Check the li
 
 ## CHANGELOG
 
-Version 0.0.1 (In progress)
+Version 0.0.2 (In progress)
+----------------------------
+
+- Add
+- Pull
+- Merge
+
+Version 0.0.1 (13/05/2015)
 ----------------------------
 
 - Init
