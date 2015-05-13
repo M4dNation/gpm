@@ -54,7 +54,39 @@ CONFIG_USERMAIL=""
 
 add()
 {
-	echo "$CYAN"
+	if [ -d .git ]; then
+		echo "$CYAN"
+		echo "You are about to add files to be commited. Would you like to see current branch' status first ? $NORMAL"
+		read RESPONSE
+		if [ "$RESPONSE" = "$YES" ]; then
+			git status
+			echo "$CYAN"
+			echo "Would you like more detail about changes before adding files to be commited ? $NORMAL"
+			read RESPONSE
+			if [ "$RESPONSE" = "$YES" ]; then
+				git diff
+			fi
+		fi
+		echo "$CYAN"
+		echo "Would you like to add every file of the directory to be tracked ? $NORMAL"
+		read RESPONSE
+		if [ "$RESPONSE" = "$YES" ]; then
+			git add .
+			echo "$CYAN"
+			echo "Displaying tracked file:"
+			echo "--------------------------------------"
+			git status
+			echo "$VERT"
+			echo "All files successfully added ! $NORMAL"
+		else
+			echo "$CYAN"
+		fi
+	else
+		echo "$ROUGE"
+		echo "This directory isn't a git repository."
+		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+	fi
+
 }
 
 log()
@@ -257,10 +289,10 @@ commit()
 		echo "Please, enter a commit description : $NORMAL"
 		read COMMIT_DESCRIPTION
 		echo "$CYAN"
-		echo "Would you like to add files to be commited ? $NORMAL"
+		echo "Would you like to add all files to be commited ? $NORMAL"
 		read RESPONSE
 		if [ "$RESPONSE" = "$YES" ]; then
-			add
+			git add .
 		fi
 		echo "$CYAN"
 		echo "You are about to make a commit on your current branch."
@@ -279,13 +311,13 @@ commit()
 			echo "$CYAN"
 			echo "Please, enter a remote branch name for your commit : $NORMAL"
 			read REMOTE_BRANCH_NAME
-			git commit -a -m "$COMMIT_DESCRIPTION"
+			git commit -m "$COMMIT_DESCRIPTION"
 			git push origin $REMOTE_BRANCH_NAME
 
 			echo "$VERT"
 			echo "Modification successfully commited and pushed on the remote branch $REMOTE_BRANCH_NAME ! $NORMAL"
 		else
-			git commit -a -m "$COMMIT_DESCRIPTION"
+			git commit -m "$COMMIT_DESCRIPTION"
 			echo "$VERT"
 			echo "Modification successfully commited ! $NORMAL"
 		fi
@@ -363,11 +395,12 @@ while [ $LOOP -gt 0 ]; do
 	echo "Hi, $AUTHOR ! What do you want to do ? $NORMAL"
 	read ACTION
 
-	################## LOG ACTION ###################################
+	if [ "$ACTION" = "$ACTION_ADD" ];then
+		add
+	fi
 	if [ "$ACTION" = "$ACTION_LOG" ];then
 		log
 	fi
-	################## TAG ACTION ###################################
 	if [ "$ACTION" = "$ACTION_TAG" ];then
 		tag
 	fi
