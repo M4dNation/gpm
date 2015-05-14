@@ -19,13 +19,11 @@ GPM is available under the terms of the GNU GENERAL PUBLIC LICENSE. Check the li
 
 ## Functionnalities
 
-### Initialize Git and Configuration 
+#### General information 
 
 Before anything, your project should have a **contrib** folder in which you have to put this **git.sh** script.
 By the way, you should always call this script from the root of your project folder.
 For example, if your project has the following tree organisation : 
- 
-    (we suppose we're a now in /path/to/project/)
 
 - src
 - examples
@@ -34,6 +32,18 @@ For example, if your project has the following tree organisation :
 - contrib
 
 Then, remember that any call of the script from one of those folders will make the script use relative link interprated from its calling location and not from the file location, as it's usually the case with any shell command.
+
+To launch the script, use the following command :
+
+    sh contrib/git.sh
+or
+	./contrib/git.sh
+
+If any permission error occure, please use the following command to add execution write:
+
+	chmod +x contrib/git.sh
+
+If everything runs well, you should have a greeting in your shell interface.
 
 ## CHANGELOG
 
