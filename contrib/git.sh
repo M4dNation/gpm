@@ -47,6 +47,8 @@ LOCAL_BRANCH_NAME=""
 REMOTE_BRANCH_NAME=""
 CONFIG_USERNAME=""
 CONFIG_USERMAIL=""
+BRANCH_IN=""
+BRANCH_FROM=""
 
 # Functions
 
@@ -239,6 +241,18 @@ merge()
 {
 	if [ -d .git ]; then
 		echo "$CYAN"
+		echo "Please, enter the branch you want to merge in : $NORMAL"
+		read BRANCH_IN
+		branch=$(git symbolic-ref --short HEAD)
+		echo "$branch"
+		echo "$BRANCH_IN"
+		git checkout $BRANCH_IN 2> tmp.txt
+		if [ $? -ne 0 ]; then
+			echo "An error occured ! Please, fix it."
+			echo "------------------------------------"
+			cat tmp.txt
+			rm tmp.txt
+		fi
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
@@ -430,15 +444,11 @@ delete()
 }
 
 
-####### Opening Message ###########
-
-echo "$CYAN"
-echo "Welcome in the git project manager ! Who are you ? $NORMAL"
-read AUTHOR
+####### Main ###########
 
 while [ $LOOP -gt 0 ]; do
 	echo "$CYAN"
-	echo "Hi, $AUTHOR ! What do you want to do ? $NORMAL"
+	echo "Welcome in the git project manager ! What do you want to do ? $NORMAL"
 	read ACTION
 
 	if [ "$ACTION" = "$ACTION_ADD" ];then
@@ -464,6 +474,9 @@ while [ $LOOP -gt 0 ]; do
 	fi
 	if [ "$ACTION" = "$ACTION_CONFIG" ];then
 		config
+	fi
+	if [ "$ACTION" = "$ACTION_MERGE" ];then
+		merge
 	fi
 	LOOP=0
 done

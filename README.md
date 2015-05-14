@@ -19,6 +19,9 @@ GPM is available under the terms of the GNU GENERAL PUBLIC LICENSE. Check the li
 
 ## Functionnalities
 
+### Initialize Git and Configuration 
+
+Before anything, your project should have a **contrib** folder in which you have to put this **git.sh** script.
 
 ## CHANGELOG
 
