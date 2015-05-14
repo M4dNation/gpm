@@ -47,6 +47,8 @@ If any permission error occures, please use the following command to add executi
 If everything runs well, you should have a greeting in your shell interface and a question about the command you want to execute.
 Any execution must be confirmed with a "yes" answer, which is **case-sensitive**. Any other than a "yes or no" expected answer will be considered as a no.
 
+You can enter the **help** command to see the list of any command available. You can also have a description of any command thanks to **help**.
+
 #### Create and configurate
 
 If your folder is already a git repository and is properly configured, you can skip this section and go to the next one.
@@ -77,8 +79,6 @@ If you choose to make your configuration a **system configuration**, your config
 If neither the global or the system configuration fits you for personal reasons, just answer "no" at both questions to make your configuration a **local configuration** for your project.
 
 I personnaly use a **global configuration**, considerating I don't have to change my appelation during my git usage, no matter the project I work on.
-
-
 
 
 ## CHANGELOG
