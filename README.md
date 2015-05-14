@@ -49,6 +49,8 @@ Any execution must be confirmed with a "yes" answer, which is **case-sensitive**
 
 You can enter the **help** command to see the list of any command available. You can also have a description of any command thanks to **help**.
 
+All error occured during the script are written in a **gerror.txt** file, which will always be put in the **contrib** folder (which is one of the reason you should apply previous advice about your project's configuration ;) ).
+
 #### Create and configurate
 
 If your folder is already a git repository and is properly configured, you can skip this section and go to the next one.
@@ -110,7 +112,7 @@ Version 0.0.2 (In progress)
 - Pull
 - Merge
 
-I also added many error handling inside previous functionnalities.
+I also added many error handling inside previous and current functionnalities.
 A dedicated tutorial is also available in the **Functionnalities** section.
 
 Version 0.0.1 (13/05/2015)
