@@ -23,8 +23,9 @@ GPM is available under the terms of the GNU GENERAL PUBLIC LICENSE. Check the li
 
 Before anything, your project should have a **contrib** folder in which you have to put this **git.sh** script.
 By the way, you should always call this script from the root of your project folder.
-For example, if your project has the following tree organisation (we suppose we're a now in '/path/to/project/`):
-
+For example, if your project has the following tree organisation : 
+	(we suppose we're a now in '/path/to/project/`)
+		
 - src
 - examples
 	- test 1
