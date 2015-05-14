@@ -31,7 +31,7 @@ For example, if your project has the following tree organisation :
 	- test 2
 - contrib
 
-Then, remember that any call of the script from one of those folders will make the script use relative link interprated from its calling location and not from the file location, as it's usually the case with any shell command.
+Then, remember that any call of the script from one of those folders will make the script use relatives links interprated from its calling location and not from the file location, as it's usually the case with any shell command.
 
 To launch the script, use the following command :
 
@@ -54,7 +54,7 @@ You can enter the **help** command to see the list of any command available. You
 If your folder is already a git repository and is properly configured, you can skip this section and go to the next one.
 However, if you have any doubt about your git configuration or if you project isn't in a repository yet, use the following explanations to make it.
 
-In this section, we will use two differents command:
+In this section, we will use two differents commands:
 
     init
 and
@@ -62,13 +62,13 @@ and
     config
 
 Use the **init** command if you want to create a new git repository. You just need to confirm with the "yes" answer to create your repository.
-If everything runs well, a green confirmation should appear. If your folder is already a git repository, a read alert should inform you about it.
+If everything runs well, a green confirmation should appear. If your folder is already a git repository, a red alert should inform you about it.
 
 The **init** command should be the first to be called when you start a project, considering than any other command aren't going to be functional until your folder isn't a git repository.
-Beside, even if all command will be available after **init** is called, you should call **config** just after your **init** call and make the configuration, avoiding many errors when git will be call.
+Beside, even if all commands will be available after **init** is called, you should call **config** just after your **init** call and make the configuration, avoiding many errors when git will be called.
 
-Just answer **config** when the script ask you what you want to do to configure your git repository.
-You will be asked to give your author name and your email to authenticate you in your git call (such as commit for example).
+Just answer **config** when the script asks you what you want to do to configure your git repository.
+You will be asked to give your **author name** and your **email** to authenticate you in your git calling (such as commit for example).
 You will also be asked if you want to make this configuration either :
 
 - A global configuration
