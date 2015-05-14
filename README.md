@@ -40,12 +40,12 @@ or
     
     ./contrib/git.sh
 
-If any permission error occure, please use the following command to add execution write:
+If any permission error occures, please use the following command to add execution write:
 
 	chmod +x contrib/git.sh
 
 If everything runs well, you should have a greeting in your shell interface and a question about the command you want to execute.
-Any execution must be confirmed with a "yes" answer, which is **case-sensitive**. Any other response to a "yes or no" expected answer will be considered as a no.
+Any execution must be confirmed with a "yes" answer, which is **case-sensitive**. Any other than a "yes or no" expected answer will be considered as a no.
 
 #### Create and configurate
 
@@ -56,10 +56,30 @@ In this section, we will use two differents command:
 
     init
 and
+
     config
 
 Use the **init** command if you want to create a new git repository. You just need to confirm with the "yes" answer to create your repository.
 If everything runs well, a green confirmation should appear. If your folder is already a git repository, a read alert should inform you about it.
+
+The **init** command should be the first to be called when you start a project, considering than any other command aren't going to be functional until your folder isn't a git repository.
+Beside, even if all command will be available after **init** is called, you should call **config** just after your **init** call and make the configuration, avoiding many errors when git will be call.
+
+Just answer **config** when the script ask you what you want to do to configure your git repository.
+You will be asked to give your author name and your email to authenticate you in your git call (such as commit for example).
+You will also be asked if you want to make this configuration either :
+
+- A global configuration
+- A system configuration
+
+If you choose to make your configuration a **global configuration**, your configuration will be put for all other git project used with this system session.
+If you choose to make your configuration a **system configuration**, your configuration will be put for the entire system.
+If neither the global or the system configuration fits you for personal reasons, just answer "no" at both questions to make your configuration a **local configuration** for your project.
+
+I personnaly use a **global configuration**, considerating I don't have to change my appelation during my git usage, no matter the project I work on.
+
+
+
 
 ## CHANGELOG
 
