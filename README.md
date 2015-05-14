@@ -78,17 +78,40 @@ If you choose to make your configuration a **global configuration**, your config
 If you choose to make your configuration a **system configuration**, your configuration will be put for the entire system.
 If neither the global or the system configuration fits you for personal reasons, just answer "no" at both questions to make your configuration a **local configuration** for your project.
 
-I personnaly use a **global configuration**, considerating I don't have to change my appelation during my git usage, no matter the project I work on.
+I personnaly use a **global configuration**, considerating I don't have to change my naming during my git usage, no matter the project I work on.
+
+#### Configuration remote functionnality
+
+You can skip this section if you don't want to use a remote website to handle your git information such as Github or Bitbucket (this would be a terrible mistake ! :) ).
 
 
 ## CHANGELOG
 
+Version 0.0.4
+----------------------------
+
+- Tag
+- Remove
+- Rename
+
+Version 0.0.3
+----------------------------
+
+- Branch
+- Fetch
+- Clone
+- Rebase
+
 Version 0.0.2 (In progress)
 ----------------------------
 
+- Remote
 - Add
 - Pull
 - Merge
+
+I also added many error handling inside previous functionnalities.
+A dedicated tutorial is also available in the **Functionnalities** section.
 
 Version 0.0.1 (13/05/2015)
 ----------------------------
