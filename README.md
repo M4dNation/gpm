@@ -37,13 +37,29 @@ To launch the script, use the following command :
 
     sh contrib/git.sh
 or
-	./contrib/git.sh
+    
+    ./contrib/git.sh
 
 If any permission error occure, please use the following command to add execution write:
 
 	chmod +x contrib/git.sh
 
-If everything runs well, you should have a greeting in your shell interface.
+If everything runs well, you should have a greeting in your shell interface and a question about the command you want to execute.
+Any execution must be confirmed with a "yes" answer, which is **case-sensitive**. Any other response to a "yes or no" expected answer will be considered as a no.
+
+#### Create and configurate
+
+If your folder is already a git repository and is properly configured, you can skip this section and go to the next one.
+However, if you have any doubt about your git configuration or if you project isn't in a repository yet, use the following explanations to make it.
+
+In this section, we will use two differents command:
+
+    init
+and
+    config
+
+Use the **init** command if you want to create a new git repository. You just need to confirm with the "yes" answer to create your repository.
+If everything runs well, a green confirmation should appear. If your folder is already a git repository, a read alert should inform you about it.
 
 ## CHANGELOG
 
