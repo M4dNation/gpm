@@ -1,20 +1,18 @@
 #!/bin/bash
 
 # Output colors
-
-VERT="\\033[1;32m"
 NORMAL="\\033[0;39m"
-ROUGE="\\033[1;31m"
-ROSE="\\033[1;35m"
-BLEU="\\033[1;34m"
-BLANC="\\033[0;02m"
-BLANCLAIR="\\033[1;08m"
-JAUNE="\\033[1;33m"
+RED="\\033[1;31m"
+GREEN="\\033[1;32m"
+YELLOW="\\033[1;33m"
+BLUE="\\033[1;34m"
+PINK="\\033[1;35m"
 CYAN="\\033[1;36m"
+WHITE="\\033[1;38m"
+GREY="\\033[1;30m"
 
 # Value
 
-NO="no"
 YES="yes"
 
 ACTION_ADD="add"
@@ -76,15 +74,45 @@ add()
 			echo "Displaying tracked file:"
 			echo "--------------------------------------"
 			git status
-			echo "$VERT"
+			echo "$GREEN"
 			echo "All files successfully added ! $NORMAL"
 		else
-			echo "$CYAN"
+			FILENAME="FILENAME"
+			while [ "$FILENAME" != "" ]; do
+				echo "$CYAN"
+				echo "Please, enter the name of the file or directory you wish to add (no name to stop) : $NORMAL"
+				read FILENAME
+				if [ "$FILENAME" != "" ]; then
+					if [ -d "$FILENAME" ]; then
+						git add "$FILENAME"
+						echo "$GREEN"
+						echo "Directory $FILENAME successfully added ! $NORMAL"
+					else
+						if [ -e "$FILENAME" ]; then
+							git add "$FILENAME"
+							echo "$GREEN"
+							echo "File $FILENAME successfully added ! $NORMAL"
+						else
+							echo "$RED"
+							echo "Unable to add $FILENAME, file or directory not found !"
+						fi
+					fi
+					echo "$CYAN"
+					echo "Would you like to see current branch' status now ? $NORMAL"
+					read RESPONSE
+					if [ "$RESPONSE" = "$YES" ]; then
+						echo "$CYAN"
+						echo "Displaying tracked file:"
+						echo "--------------------------------------"
+						git status
+					fi
+				fi
+			done
 		fi
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 
 }
@@ -122,25 +150,31 @@ log()
 					git log >> $FILENAME
 				fi
 			fi
-			echo "$VERT"
+			echo "$GREEN"
 			echo "Logs successfully saved in $FILENAME ! $NORMAL"
 		fi
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
 
 tag()
 {
-	echo "Function tag"
+	if [ -d .git ]; then
+		echo "$CYAN"
+	else
+		echo "$RED"
+		echo "This directory isn't a git repository."
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
+	fi
 }
 
 init()
 {
 	if [ -d .git ]; then
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory is already a git repository. $NORMAL"
 	else
 		echo "$CYAN"
@@ -152,7 +186,7 @@ init()
 			read OPTIONS
 			git init $OPTIONS
 
-			echo "$VERT"
+			echo "$GREEN"
 			echo "Repository successfully initialized ! $NORMAL"
 		fi
 	fi
@@ -165,12 +199,12 @@ push()
 		echo "Please, enter a remote branch to push code on : $NORMAL"
 		read REMOTE_BRANCH_NAME
 		git push origin "$REMOTE_BRANCH_NAME"
-		echo "$VERT"
+		echo "$GREEN"
 		echo "Content successfully pushed on branch $REMOTE_BRANCH_NAME ! $NORMAL"
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
 
@@ -181,12 +215,12 @@ pull()
 		echo "Please, enter a remote branch to pull code from : $NORMAL"
 		read REMOTE_BRANCH_NAME
 		git pull origin "$REMOTE_BRANCH_NAME"
-		echo "$VERT"
+		echo "$GREEN"
 		echo "Content successfully pulled from branch $REMOTE_BRANCH_NAME ! $NORMAL"
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
 
@@ -195,9 +229,9 @@ fetch()
 	if [ -d .git ]; then
 		echo "$CYAN"
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
 
@@ -206,9 +240,9 @@ merge()
 	if [ -d .git ]; then
 		echo "$CYAN"
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
 
@@ -217,9 +251,9 @@ clone()
 	if [ -d .git ]; then
 		echo "$CYAN"
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
 
@@ -228,9 +262,9 @@ reset()
 	if [ -d .git ]; then
 		echo "$CYAN"
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
 
@@ -239,9 +273,9 @@ rebase()
 	if [ -d .git ]; then
 		echo "$CYAN"
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
 
@@ -262,7 +296,7 @@ config()
 		if [ "$RESPONSE" = "$YES" ]; then
 			git config --global user.name "$CONFIG_USERNAME"
 			git config --global user.email "$CONFIG_USERMAIL"
-			echo "$VERT"
+			echo "$GREEN"
 			echo "Global configuration successfully saved ! $NORMAL"
 		else
 			echo "$CYAN"
@@ -271,19 +305,19 @@ config()
 			if [ "$RESPONSE" = "$YES" ]; then
 				git config --system user.name "$CONFIG_USERNAME"
 				git config --system user.email "$CONFIG_USERMAIL"
-				echo "$VERT"
+				echo "$GREEN"
 				echo "System configuration successfully saved ! $NORMAL"
 			else
 				git config user.name "$CONFIG_USERNAME"
 				git config user.email "$CONFIG_USERMAIL"
-				echo "$VERT"
+				echo "$GREEN"
 				echo "Local configuration successfully saved ! $NORMAL"
 			fi
 		fi
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
 
@@ -326,17 +360,17 @@ commit()
 			git commit -m "$COMMIT_DESCRIPTION"
 			git push origin $REMOTE_BRANCH_NAME
 
-			echo "$VERT"
+			echo "$GREEN"
 			echo "Modification successfully commited and pushed on the remote branch $REMOTE_BRANCH_NAME ! $NORMAL"
 		else
 			git commit -m "$COMMIT_DESCRIPTION"
-			echo "$VERT"
+			echo "$GREEN"
 			echo "Modification successfully commited ! $NORMAL"
 		fi
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
 
@@ -345,9 +379,9 @@ remove()
 	if [ -d .git ]; then
 		echo "$CYAN"
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
 
@@ -356,9 +390,9 @@ remote()
 	if [ -d .git ]; then
 		echo "$CYAN"
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
 
@@ -367,9 +401,9 @@ rename()
 	if [ -d .git ]; then
 		echo "$CYAN"
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
 	
@@ -378,9 +412,9 @@ create()
 	if [ -d .git ]; then
 		echo "$CYAN"
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
 
@@ -389,9 +423,9 @@ delete()
 	if [ -d .git ]; then
 		echo "$CYAN"
 	else
-		echo "$ROUGE"
+		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $ROUGE command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
 

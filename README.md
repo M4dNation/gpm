@@ -17,6 +17,9 @@ There is actually no other contributors for this project. If you want to contrib
 
 GPM is available under the terms of the GNU GENERAL PUBLIC LICENSE. Check the licence file for more details.
 
+## Functionnalities
+
+
 ## CHANGELOG
 
 Version 0.0.2 (In progress)
