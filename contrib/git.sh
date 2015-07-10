@@ -49,6 +49,7 @@ CONFIG_USERNAME=""
 CONFIG_USERMAIL=""
 BRANCH_IN=""
 BRANCH_FROM=""
+REPOSITORY=""
 
 # Functions
 
@@ -194,6 +195,7 @@ init()
 	fi
 }
 
+
 push()
 {
 	if [ -d .git ]; then
@@ -209,6 +211,7 @@ push()
 		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
+
 
 pull()
 {
@@ -263,12 +266,22 @@ merge()
 clone()
 {
 	if [ -d .git ]; then
-		echo "$CYAN"
-	else
 		echo "$RED"
-		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
+		echo "This directory is already a git repository !"
+		echo "Are you sure you want to clone an other repository here ?"
+		read RESPONSE
+		if [ "$RESPONSE" = "$NO" ]; then
+			return 0;
+		fi
+	else
+		echo "$CYAN"
+		echo "Please, enter repository's URL :"
+		read REPOSITORY
+		echo "Please, enter a directory name (default is current one):"
+		read DIRECTORY
+		git clone REPOSITORY DIRECTORY
 	fi
+
 }
 
 reset()
@@ -292,6 +305,7 @@ rebase()
 		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
+
 
 config()
 {
@@ -334,6 +348,7 @@ config()
 		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
 }
+
 
 commit()
 {
@@ -403,6 +418,74 @@ remote()
 {
 	if [ -d .git ]; then
 		echo "$CYAN"
+		echo "Would you like to see URL(s) of your remote(s) repository ?"
+		read RESPONSE
+		echo "Displaying repository log:"
+		echo "------------------------------------------"
+		if [ "$RESPONSE" = "$YES" ]; then
+			git remote -v
+			echo "$CYAN"
+			echo "------------------------------------------"
+			echo "Do you want to save this in a file ? $NORMAL"
+			read RESPONSE
+			if [ "$RESPONSE" = "$YES" ]; then
+				echo "$CYAN"
+				echo "Please, enter filename : $NORMAL"
+				read FILENAME
+				echo "$CYAN"
+				echo "Erase content of $FILENAME ? $NORMAL"
+				read RESPONSE
+				if [ "$RESPONSE" = "$YES" ];then
+					echo "$CYAN"
+					echo "You are about to save remote(s) informations in $FILENAME deleting all its content, are you sure ? $NORMAL"
+					read RESPONSE
+					if [ "$RESPONSE" = "$YES" ];then
+						git remote -v > $FILENAME
+					fi
+				else
+					echo "$CYAN"
+					echo "You are about to add remote(s) informations to $FILENAME, are you sure ? $NORMAL"
+					read RESPONSE
+					if [ "$RESPONSE" = "$YES" ];then
+						git remote -v >> $FILENAME
+					fi
+				fi
+				echo "$GREEN"
+				echo "Remote(s) informations successfully saved in $FILENAME ! $NORMAL"
+			fi
+		else
+			git remote
+			echo "$CYAN"
+			echo "------------------------------------------"
+			echo "Do you want to save this in a file ? $NORMAL"
+			read RESPONSE
+			if [ "$RESPONSE" = "$YES" ]; then
+				echo "$CYAN"
+				echo "Please, enter filename : $NORMAL"
+				read FILENAME
+				echo "$CYAN"
+				echo "Erase content of $FILENAME ? $NORMAL"
+				read RESPONSE
+				if [ "$RESPONSE" = "$YES" ];then
+					echo "$CYAN"
+					echo "You are about to save remote(s) informations in $FILENAME deleting all its content, are you sure ? $NORMAL"
+					read RESPONSE
+					if [ "$RESPONSE" = "$YES" ];then
+						git remote > $FILENAME
+					fi
+				else
+					echo "$CYAN"
+					echo "You are about to add remote(s) informations to $FILENAME, are you sure ? $NORMAL"
+					read RESPONSE
+					if [ "$RESPONSE" = "$YES" ];then
+						git remote >> $FILENAME
+					fi
+				fi
+				echo "$GREEN"
+				echo "Remote(s) informations successfully saved in $FILENAME ! $NORMAL"
+			fi
+		fi
+		
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
@@ -469,14 +552,36 @@ while [ $LOOP -gt 0 ]; do
 	if [ "$ACTION" = "$ACTION_PULL" ];then
 		pull
 	fi
+	if [ "$ACTION" = "$ACTION_FETCH" ];then
+		fetch
+	fi
+	if [ "$ACTION" = "$ACTION_MERGE" ];then
+		merge
+	fi
+	if [ "$ACTION" = "$ACTION_CLONE" ];then
+		clone
+	fi
+	if [ "$ACTION" = "$ACTION_RESET" ];then
+		reset
+	fi
+	if [ "$ACTION" = "$ACTION_REBASE" ];then
+		rebase
+	fi
 	if [ "$ACTION" = "$ACTION_COMMIT" ];then
 		commit
 	fi
 	if [ "$ACTION" = "$ACTION_CONFIG" ];then
 		config
 	fi
-	if [ "$ACTION" = "$ACTION_MERGE" ];then
-		merge
+	if [ "$ACTION" = "$ACTION_REMOVE" ];then
+		remove
 	fi
+	if [ "$ACTION" = "$ACTION_REMOTE" ];then
+		remote
+	fi
+	if [ "$ACTION" = "$ACTION_RENAME" ];then
+		rename
+	fi
+
 	LOOP=0
 done

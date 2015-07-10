@@ -78,7 +78,7 @@ You will also be asked if you want to make this configuration either :
 
 If you choose to make your configuration a **global configuration**, your configuration will be put for all other git project used with this system session.
 If you choose to make your configuration a **system configuration**, your configuration will be put for the entire system.
-If neither the global or the system configuration fits you for personal reasons, just answer "no" at both questions to make your configuration a **local configuration** for your project.
+If neither the global nor the system configuration fits you for personal reasons, just answer "no" at both questions to make your configuration a **local configuration** for your project.
 
 I personnaly use a **global configuration**, considerating I don't have to change my naming during my git usage, no matter the project I work on.
 
@@ -101,7 +101,7 @@ Version 0.0.3
 
 - Branch
 - Fetch
-- Clone
+- Merge
 - Rebase
 
 Version 0.0.2 (In progress)
@@ -110,7 +110,7 @@ Version 0.0.2 (In progress)
 - Remote
 - Add
 - Pull
-- Merge
+- Clone
 
 I also added many error handling inside previous and current functionnalities.
 A dedicated tutorial is also available in the **Functionnalities** section.
