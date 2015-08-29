@@ -89,20 +89,14 @@ You can skip this section if you don't want to use a remote website to handle yo
 
 ## CHANGELOG
 
-Version 0.0.4
-----------------------------
-
-- Tag
-- Remove
-- Rename
-
-Version 0.0.3
+Version 1.0.0
 ----------------------------
 
 - Branch
-- Fetch
 - Merge
 - Rebase
+- Remove
+- Rename
 
 Version 0.0.2 (In progress)
 ----------------------------

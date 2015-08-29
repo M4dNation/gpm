@@ -12,12 +12,9 @@ WHITE="\\033[1;38m"
 GREY="\\033[1;30m"
 
 # Value
-
 YES="yes"
-
 ACTION_ADD="add"
 ACTION_LOG="log"
-ACTION_TAG="tag"
 ACTION_INIT="init"
 ACTION_PUSH="push"
 ACTION_PULL="pull"
@@ -51,8 +48,10 @@ BRANCH_IN=""
 BRANCH_FROM=""
 REPOSITORY=""
 
-# Functions
+# Functionnalities
 
+
+# Add : Use it to track file for versionning
 add()
 {
 	if [ -d .git ]; then
@@ -120,6 +119,7 @@ add()
 
 }
 
+# Log : Use it to display any commit log about your current branch
 log()
 {
 	if [ -d .git ]; then
@@ -163,17 +163,7 @@ log()
 	fi
 }
 
-tag()
-{
-	if [ -d .git ]; then
-		echo "$CYAN"
-	else
-		echo "$RED"
-		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
-	fi
-}
-
+# Init : Use it to initialize a new git repositiory
 init()
 {
 	if [ -d .git ]; then
@@ -195,7 +185,7 @@ init()
 	fi
 }
 
-
+# Push : Use it to push local versionning on a remote branch
 push()
 {
 	if [ -d .git ]; then
@@ -212,7 +202,7 @@ push()
 	fi
 }
 
-
+# Pull : Use it to pull remote versionning on a local branch
 pull()
 {
 	if [ -d .git ]; then
@@ -229,17 +219,7 @@ pull()
 	fi
 }
 
-fetch()
-{
-	if [ -d .git ]; then
-		echo "$CYAN"
-	else
-		echo "$RED"
-		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
-	fi
-}
-
+# Merge : Use it to merge a branch into another
 merge()
 {
 	if [ -d .git ]; then
@@ -263,6 +243,7 @@ merge()
 	fi
 }
 
+# Clone : Use it to clone another repository
 clone()
 {
 	if [ -d .git ]; then
@@ -284,6 +265,7 @@ clone()
 
 }
 
+# Reset : 
 reset()
 {
 	if [ -d .git ]; then
@@ -295,6 +277,7 @@ reset()
 	fi
 }
 
+# Rebase : 
 rebase()
 {
 	if [ -d .git ]; then
@@ -306,7 +289,7 @@ rebase()
 	fi
 }
 
-
+# Config : Use it to configure your repository
 config()
 {
 	if [ -d .git ]; then
@@ -349,7 +332,7 @@ config()
 	fi
 }
 
-
+# Commit : Use it to commit your changes and enable versionning for theses changes
 commit()
 {
 	if [ -d .git ]; then
@@ -403,6 +386,7 @@ commit()
 	fi
 }
 
+# Remove : 
 remove()
 {
 	if [ -d .git ]; then
@@ -414,6 +398,7 @@ remove()
 	fi
 }
 
+# Remote : 
 remote()
 {
 	if [ -d .git ]; then
@@ -493,16 +478,6 @@ remote()
 	fi
 }
 
-rename()
-{
-	if [ -d .git ]; then
-		echo "$CYAN"
-	else
-		echo "$RED"
-		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
-	fi
-}
 	
 create()
 {
@@ -540,9 +515,6 @@ while [ $LOOP -gt 0 ]; do
 	if [ "$ACTION" = "$ACTION_LOG" ];then
 		log
 	fi
-	if [ "$ACTION" = "$ACTION_TAG" ];then
-		tag
-	fi
 	if [ "$ACTION" = "$ACTION_INIT" ];then
 		init
 	fi
@@ -551,9 +523,6 @@ while [ $LOOP -gt 0 ]; do
 	fi
 	if [ "$ACTION" = "$ACTION_PULL" ];then
 		pull
-	fi
-	if [ "$ACTION" = "$ACTION_FETCH" ];then
-		fetch
 	fi
 	if [ "$ACTION" = "$ACTION_MERGE" ];then
 		merge
@@ -578,9 +547,6 @@ while [ $LOOP -gt 0 ]; do
 	fi
 	if [ "$ACTION" = "$ACTION_REMOTE" ];then
 		remote
-	fi
-	if [ "$ACTION" = "$ACTION_RENAME" ];then
-		rename
 	fi
 
 	LOOP=0
