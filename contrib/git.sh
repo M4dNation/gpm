@@ -225,7 +225,7 @@ merge()
 	if [ -d .git ]; then
 		echo "$CYAN"
 		echo "You are actually on branch :"
-		echo "----------------------------------"
+		echo "-----------------------------------"
 		git branch
 		echo "$CYAN"
 		echo "Please, enter the branch you want to merge in your current branch: $NORMAL"
