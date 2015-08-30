@@ -226,16 +226,26 @@ merge()
 		echo "$CYAN"
 		echo "Please, enter the branch you want to merge in : $NORMAL"
 		read BRANCH_IN
-		branch=$(git symbolic-ref --short HEAD)
-		echo "$branch"
-		echo "$BRANCH_IN"
 		git checkout $BRANCH_IN 2> tmp.txt
 		if [ $? -ne 0 ]; then
 			echo "An error occured ! Please, fix it."
 			echo "------------------------------------"
 			cat tmp.txt
 			rm tmp.txt
+		else
+			rm tmp.txt
+			echo "$CYAN"
+			echo "Please, enter the branch you want to merge : $NORMAL"
+			read BRANCH_FROM
+			echo "You're about to merge branch $BRANCH_FROM into $BRANCH_IN, are you sure ?"
+			read RESPONSE
+			if [ "$RESPONSE" = "$NO" ]; then
+				return 0;
+			else
+				git merge BRANCH_FROM
+			fi
 		fi
+
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
