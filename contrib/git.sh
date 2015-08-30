@@ -231,7 +231,7 @@ merge()
 		echo "Please, enter the branch you want to merge in your current branch: $NORMAL"
 		read BRANCH_FROM
 		echo "$CYAN"
-		echo "You're about to merge branch $BRANCH_FROM into your current branch, are you sure ?"
+		echo "You're about to merge branch $BRANCH_FROM into your current branch, are you sure $NORMAL?"
 		read RESPONSE
 		if [ "$RESPONSE" = "$NO" ]; then
 			return 0;
