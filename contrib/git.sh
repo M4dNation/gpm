@@ -506,7 +506,7 @@ branch()
 				echo "What kind of deleting do you want to do : local, remote or both ? $NORMAL"
 				read RESPONSE
 				if [ "$RESPONSE" = "$both" ];then
-					echo "CYAN"
+					echo "$CYAN"
 					echo "Please, enter a branch name to be deleted : $NORMAL"
 					read BRANCH_IN
 					echo "$CYAN"
@@ -519,7 +519,7 @@ branch()
 					fi
 				else
 					if [ "$RESPONSE" = "$remote" ];then
-						echo "CYAN"
+						echo "$CYAN"
 						echo "Please, enter a branch name to be deleted : $NORMAL"
 						read BRANCH_IN
 						echo "$CYAN"
@@ -531,7 +531,7 @@ branch()
 						fi
 					else
 						if [ "$RESPONSE" = "$local" ];then
-							echo "CYAN"
+							echo "$CYAN"
 							echo "Please, enter a branch name to be deleted : $NORMAL"
 							read BRANCH_IN
 							echo "$CYAN"
