@@ -97,8 +97,6 @@ To link your local repository with the remote one created on Github, you will ne
 Version 1.0.0
 ----------------------------
 
-- Rebase
-- Remove
 - Branch
 - Remote
 - Add
