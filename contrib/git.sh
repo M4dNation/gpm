@@ -490,6 +490,7 @@ branch()
 			echo "$CYAN"
 			echo "Please, enter a name for your branch : $NORMAL"
 			read BRANCH_IN
+			echo "$CYAN"
 			echo "You are about to create a new branch with the same configuration of your current one, are you sure ? $NORMAL"
 			read RESPONSE
 			if [ "$RESPONSE" = "$YES" ];then
