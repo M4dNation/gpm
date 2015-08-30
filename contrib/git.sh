@@ -224,28 +224,18 @@ merge()
 {
 	if [ -d .git ]; then
 		echo "$CYAN"
-		echo "Please, enter the branch you want to merge in : $NORMAL"
-		read BRANCH_IN
-		git checkout $BRANCH_IN 2> tmp.txt
-		if [ $? -ne 0 ]; then
-			echo "An error occured ! Please, fix it."
-			echo "------------------------------------"
-			cat tmp.txt
-			rm tmp.txt
+		echo "You are actually on branch :"
+		echo "----------------------------------"
+		git branch
+		echo "Please, enter the branch you want to merge in your current branch: $NORMAL"
+		read BRANCH_FROM
+		echo "You're about to merge branch $BRANCH_FROM into your current branch, are you sure ?"
+		read RESPONSE
+		if [ "$RESPONSE" = "$NO" ]; then
+			return 0;
 		else
-			echo "$CYAN"
-			echo "Please, enter the branch you want to merge : $NORMAL"
-			read BRANCH_FROM
-			echo "You're about to merge branch $BRANCH_FROM into $BRANCH_IN, are you sure ?"
-			read RESPONSE
-			if [ "$RESPONSE" = "$NO" ]; then
-				return 0;
-			else
-				git merge $BRANCH_FROM
-			fi
-			rm tmp.txt > /dev/null
+			git merge $BRANCH_FROM
 		fi
-
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
