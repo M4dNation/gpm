@@ -98,17 +98,13 @@ Version 1.0.0
 ----------------------------
 
 - Branch
-- Merge
 - Rebase
 - Remove
-
-Version 0.0.2 (In progress)
-----------------------------
-
 - Remote
 - Add
 - Pull
 - Clone
+- Merge
 
 I also added many error handling inside previous and current functionnalities.
 A dedicated tutorial is also available in the **Functionnalities** section.

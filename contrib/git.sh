@@ -13,23 +13,25 @@ GREY="\\033[1;30m"
 
 # Value
 YES="yes"
+LOCAL="local"
+REMOTE="remote"
+BOTH="both"
 ACTION_ADD="add"
 ACTION_LOG="log"
 ACTION_INIT="init"
 ACTION_PUSH="push"
 ACTION_PULL="pull"
-ACTION_FETCH="fetch"
+ACTION_HELP="help"
+ACTION_EXIT="exit"
 ACTION_MERGE="merge"
 ACTION_CLONE="clone"
 ACTION_RESET="reset"
+ACTION_BRANCH="branch"
 ACTION_REBASE="rebase"
 ACTION_COMMIT="commit"
 ACTION_CONFIG="config"
 ACTION_REMOVE="remove"
 ACTION_REMOTE="remote"
-ACTION_RENAME="rename"
-ACTION_CREATE_BRANCH="create"
-ACTION_DELETE_BRANCH="delete"
 
 # Variables
 LOOP=1
@@ -116,7 +118,6 @@ add()
 		echo "This directory isn't a git repository."
 		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
 	fi
-
 }
 
 # Log : Use it to display any commit log about your current branch
@@ -233,10 +234,10 @@ merge()
 		echo "$CYAN"
 		echo "You're about to merge branch $BRANCH_FROM into your current branch, are you sure $NORMAL?"
 		read RESPONSE
-		if [ "$RESPONSE" = "$NO" ]; then
-			return 0;
-		else
+		if [ "$RESPONSE" = "$YES" ]; then
 			git merge $BRANCH_FROM
+		else
+			return 0;
 		fi
 	else
 		echo "$RED"
@@ -264,7 +265,6 @@ clone()
 		read DIRECTORY
 		git clone REPOSITORY DIRECTORY
 	fi
-
 }
 
 # Reset : 
@@ -400,7 +400,7 @@ remove()
 	fi
 }
 
-# Remote : 
+# Remote : Use it to take a look on your remote configuration
 remote()
 {
 	if [ -d .git ]; then
@@ -471,31 +471,85 @@ remote()
 				echo "$GREEN"
 				echo "Remote(s) informations successfully saved in $FILENAME ! $NORMAL"
 			fi
+		fi	
+	else
+		echo "$RED"
+		echo "This directory isn't a git repository."
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
+	fi
+}
+
+# Branch : Use it to handle branch in your git repository	
+branch()
+{
+	if [ -d .git ]; then
+		echo "$CYAN"
+		echo "Do you want to create a new branch ? $NORMAL"
+		read RESPONSE
+		if [ "$RESPONSE" = "$YES" ];then
+			echo "$CYAN"
+			echo "Please, enter a name for your branch : $NORMAL"
+			read BRANCH_IN
+			echo "You are about to create a new branch with the same configuration of your current one, are you sure ? $NORMAL"
+			read RESPONSE
+			if [ "$RESPONSE" = "$YES" ];then
+				git checkout -b $BRANCH_IN
+			else
+				return 0;
+			fi
+		else
+			echo "$CYAN"
+			echo "Do you want to delete an existing branch ? $NORMAL"
+			read RESPONSE
+			if [ "$RESPONSE" = "$YES" ];then
+				echo "$CYAN"
+				echo "What kind of deleting do you want to do : local, remote or both ? $NORMAL"
+				read RESPONSE
+				if [ "$RESPONSE" = "$both" ];then
+					echo "CYAN"
+					echo "Please, enter a branch name to be deleted : $NORMAL"
+					read BRANCH_IN
+					echo "$CYAN"
+					echo "You about to delete local and remote branch named $BRANCH_IN, are you sure ?"
+					if [ "$RESPONSE" = "$YES" ];then
+						git branch -d $BRANCH_IN
+						git push origin :$BRANCH_IN
+					else
+						return 0;
+					fi
+				else
+					if [ "$RESPONSE" = "$remote" ];then
+						echo "CYAN"
+						echo "Please, enter a branch name to be deleted : $NORMAL"
+						read BRANCH_IN
+						echo "$CYAN"
+						echo "You about to delete remote branch named $BRANCH_IN, are you sure ?"
+						if [ "$RESPONSE" = "$YES" ];then
+							git push origin :$BRANCH_IN
+						else
+							return 0;
+						fi
+					else
+						if [ "$RESPONSE" = "$local" ];then
+							echo "CYAN"
+							echo "Please, enter a branch name to be deleted : $NORMAL"
+							read BRANCH_IN
+							echo "$CYAN"
+							echo "You about to delete local branch named $BRANCH_IN, are you sure ?"
+							if [ "$RESPONSE" = "$YES" ];then
+								git branch -d $BRANCH_IN
+							else
+								return 0;
+							fi
+						else
+							return 0;
+						fi
+					fi
+				fi
+			else
+				return 0;
+			fi
 		fi
-		
-	else
-		echo "$RED"
-		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
-	fi
-}
-
-	
-create()
-{
-	if [ -d .git ]; then
-		echo "$CYAN"
-	else
-		echo "$RED"
-		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
-	fi
-}
-
-delete()
-{
-	if [ -d .git ]; then
-		echo "$CYAN"
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
@@ -550,6 +604,13 @@ while [ $LOOP -gt 0 ]; do
 	if [ "$ACTION" = "$ACTION_REMOTE" ];then
 		remote
 	fi
-
-	LOOP=0
+	if [ "$ACTION" = "$ACTION_BRANCH" ];then
+		branch
+	fi
+	if [ "$ACTION" = "$ACTION_HELP" ];then
+		gpmhelp
+	fi
+	if [ "$ACTION" = "$ACTION_EXIT" ];then
+		LOOP=0
+	fi
 done
