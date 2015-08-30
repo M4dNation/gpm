@@ -233,7 +233,6 @@ merge()
 			cat tmp.txt
 			rm tmp.txt
 		else
-			rm tmp.txt
 			echo "$CYAN"
 			echo "Please, enter the branch you want to merge : $NORMAL"
 			read BRANCH_FROM
@@ -244,6 +243,7 @@ merge()
 			else
 				git merge $BRANCH_FROM
 			fi
+			rm tmp.txt > /dev/null
 		fi
 
 	else
