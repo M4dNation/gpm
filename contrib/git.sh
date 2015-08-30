@@ -32,6 +32,7 @@ ACTION_COMMIT="commit"
 ACTION_CONFIG="config"
 ACTION_REMOVE="remove"
 ACTION_REMOTE="remote"
+ACTION_CLEAR="clear"
 
 # Variables
 LOOP=1
@@ -267,30 +268,6 @@ clone()
 	fi
 }
 
-# Reset : 
-reset()
-{
-	if [ -d .git ]; then
-		echo "$CYAN"
-	else
-		echo "$RED"
-		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
-	fi
-}
-
-# Rebase : 
-rebase()
-{
-	if [ -d .git ]; then
-		echo "$CYAN"
-	else
-		echo "$RED"
-		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
-	fi
-}
-
 # Config : Use it to configure your repository
 config()
 {
@@ -381,18 +358,6 @@ commit()
 			echo "$GREEN"
 			echo "Modification successfully commited ! $NORMAL"
 		fi
-	else
-		echo "$RED"
-		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
-	fi
-}
-
-# Remove : 
-remove()
-{
-	if [ -d .git ]; then
-		echo "$CYAN"
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
@@ -511,7 +476,7 @@ branch()
 					echo "Please, enter a branch name to be deleted : $NORMAL"
 					read BRANCH_IN
 					echo "$CYAN"
-					echo "You about to delete local and remote branch named $BRANCH_IN, are you sure ?"
+					echo "You about to delete local and remote branch named $BRANCH_IN, are you sure $NORMAL?"
 					read RESPONSE
 					if [ "$RESPONSE" = "$YES" ];then
 						git branch -d $BRANCH_IN
@@ -525,7 +490,7 @@ branch()
 						echo "Please, enter a branch name to be deleted : $NORMAL"
 						read BRANCH_IN
 						echo "$CYAN"
-						echo "You about to delete remote branch named $BRANCH_IN, are you sure ?"
+						echo "You about to delete remote branch named $BRANCH_IN, are you sure $NORMAL?"
 						read RESPONSE
 						if [ "$RESPONSE" = "$YES" ];then
 							git push origin :$BRANCH_IN
@@ -538,7 +503,7 @@ branch()
 							echo "Please, enter a branch name to be deleted : $NORMAL"
 							read BRANCH_IN
 							echo "$CYAN"
-							echo "You about to delete local branch named $BRANCH_IN, are you sure ?"
+							echo "You about to delete local branch named $BRANCH_IN, are you sure $NORMAL?"
 							read RESPONSE
 							if [ "$RESPONSE" = "$YES" ];then
 								git branch -d $BRANCH_IN
@@ -590,20 +555,11 @@ while [ $LOOP -gt 0 ]; do
 	if [ "$ACTION" = "$ACTION_CLONE" ];then
 		clone
 	fi
-	if [ "$ACTION" = "$ACTION_RESET" ];then
-		reset
-	fi
-	if [ "$ACTION" = "$ACTION_REBASE" ];then
-		rebase
-	fi
 	if [ "$ACTION" = "$ACTION_COMMIT" ];then
 		commit
 	fi
 	if [ "$ACTION" = "$ACTION_CONFIG" ];then
 		config
-	fi
-	if [ "$ACTION" = "$ACTION_REMOVE" ];then
-		remove
 	fi
 	if [ "$ACTION" = "$ACTION_REMOTE" ];then
 		remote
@@ -613,6 +569,9 @@ while [ $LOOP -gt 0 ]; do
 	fi
 	if [ "$ACTION" = "$ACTION_HELP" ];then
 		gpmhelp
+	fi
+	if [ "$ACTION" = "$ACTION_CLEAR" ];then
+		clear
 	fi
 	if [ "$ACTION" = "$ACTION_EXIT" ];then
 		LOOP=0
