@@ -86,6 +86,11 @@ I personnaly use a **global configuration**, considerating I don't have to chang
 
 You can skip this section if you don't want to use a remote website to handle your git information such as Github or Bitbucket (this would be a terrible mistake ! :) ).
 
+A lot of developers use remote website to handle their git configuration, in order to find informations the easiest way possible. The most known of this website is Github : www.github.com .
+
+To link your local repository with the remote one created on Github, you will need to use the remote command.
+
+
 
 ## CHANGELOG
 
@@ -96,7 +101,6 @@ Version 1.0.0
 - Merge
 - Rebase
 - Remove
-- Rename
 
 Version 0.0.2 (In progress)
 ----------------------------
