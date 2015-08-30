@@ -242,7 +242,7 @@ merge()
 			if [ "$RESPONSE" = "$NO" ]; then
 				return 0;
 			else
-				git merge BRANCH_FROM
+				git merge $BRANCH_FROM
 			fi
 		fi
 
