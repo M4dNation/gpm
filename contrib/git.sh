@@ -506,12 +506,13 @@ branch()
 				echo "$CYAN"
 				echo "What kind of deleting do you want to do : local, remote or both ? $NORMAL"
 				read RESPONSE
-				if [ "$RESPONSE" = "$both" ];then
+				if [ "$RESPONSE" = "$BOTH" ];then
 					echo "$CYAN"
 					echo "Please, enter a branch name to be deleted : $NORMAL"
 					read BRANCH_IN
 					echo "$CYAN"
 					echo "You about to delete local and remote branch named $BRANCH_IN, are you sure ?"
+					read RESPONSE
 					if [ "$RESPONSE" = "$YES" ];then
 						git branch -d $BRANCH_IN
 						git push origin :$BRANCH_IN
@@ -519,24 +520,26 @@ branch()
 						return 0;
 					fi
 				else
-					if [ "$RESPONSE" = "$remote" ];then
+					if [ "$RESPONSE" = "$REMOTE" ];then
 						echo "$CYAN"
 						echo "Please, enter a branch name to be deleted : $NORMAL"
 						read BRANCH_IN
 						echo "$CYAN"
 						echo "You about to delete remote branch named $BRANCH_IN, are you sure ?"
+						read RESPONSE
 						if [ "$RESPONSE" = "$YES" ];then
 							git push origin :$BRANCH_IN
 						else
 							return 0;
 						fi
 					else
-						if [ "$RESPONSE" = "$local" ];then
+						if [ "$RESPONSE" = "$LOCAL" ];then
 							echo "$CYAN"
 							echo "Please, enter a branch name to be deleted : $NORMAL"
 							read BRANCH_IN
 							echo "$CYAN"
 							echo "You about to delete local branch named $BRANCH_IN, are you sure ?"
+							read RESPONSE
 							if [ "$RESPONSE" = "$YES" ];then
 								git branch -d $BRANCH_IN
 							else
