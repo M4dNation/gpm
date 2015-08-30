@@ -227,8 +227,10 @@ merge()
 		echo "You are actually on branch :"
 		echo "----------------------------------"
 		git branch
+		echo "$CYAN"
 		echo "Please, enter the branch you want to merge in your current branch: $NORMAL"
 		read BRANCH_FROM
+		echo "$CYAN"
 		echo "You're about to merge branch $BRANCH_FROM into your current branch, are you sure ?"
 		read RESPONSE
 		if [ "$RESPONSE" = "$NO" ]; then
