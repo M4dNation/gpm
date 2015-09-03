@@ -545,13 +545,14 @@ checkout()
 				read BRANCH_IN
 				git checkout $BRANCH_IN
 			else
+				echo "$CYAN"
 				echo "Are you sure you want to force the change: $NORMAL"
 				read RESPONSE
 				if [ "$RESPONSE" = "$YES" ];then
 					echo "$CYAN"
 					echo "Please enter a branch name: $NORMAL"
 					read BRANCH_IN
-					git checkout -f 
+					git checkout -f $BRANCH_IN
 				else
 					return 0;
 				fi
