@@ -16,6 +16,7 @@ YES="yes"
 LOCAL="local"
 REMOTE="remote"
 BOTH="both"
+
 ACTION_ADD="add"
 ACTION_LOG="log"
 ACTION_INIT="init"
@@ -23,6 +24,7 @@ ACTION_PUSH="push"
 ACTION_PULL="pull"
 ACTION_HELP="help"
 ACTION_EXIT="exit"
+ACTION_CLEAR="clear"
 ACTION_MERGE="merge"
 ACTION_CLONE="clone"
 ACTION_RESET="reset"
@@ -32,7 +34,7 @@ ACTION_COMMIT="commit"
 ACTION_CONFIG="config"
 ACTION_REMOVE="remove"
 ACTION_REMOTE="remote"
-ACTION_CLEAR="clear"
+ACTION_CHECKOUT="checkout"
 
 # Variables
 LOOP=1
@@ -526,6 +528,44 @@ branch()
 	fi
 }
 
+checkout()
+{
+	if [ -d .git ]; then
+		echo "$CYAN"
+		echo "Do you want to change your current branch ? $NORMAL"
+		read RESPONSE
+		if [ "$RESPONSE" = "$YES" ];then
+			echo "$CYAN"
+			echo "Do you want to commit your work first ? $NORMAL"
+			read RESPONSE
+			if [ "$RESPONSE" = "$YES" ];then
+				commit
+				echo "$CYAN"
+				echo "Please enter a branch name: $NORMAL"
+				read BRANCH_IN
+				git checkout $BRANCH_IN
+			else
+				echo "Are you sure you want to force the change: $NORMAL"
+				read RESPONSE
+				if [ "$RESPONSE" = "$YES" ];then
+					echo "$CYAN"
+					echo "Please enter a branch name: $NORMAL"
+					read BRANCH_IN
+					git checkout -f 
+				else
+					return 0;
+				fi
+			fi
+		else
+			return 0;
+		fi
+	else
+		echo "$RED"
+		echo "This directory isn't a git repository."
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
+	fi
+}
+
 
 ####### Main ###########
 
@@ -566,6 +606,9 @@ while [ $LOOP -gt 0 ]; do
 	fi
 	if [ "$ACTION" = "$ACTION_BRANCH" ];then
 		branch
+	fi
+	if [ "$ACTION" = "$ACTION_CHECKOUT" ];then
+		checkout
 	fi
 	if [ "$ACTION" = "$ACTION_HELP" ];then
 		gpmhelp
