@@ -94,6 +94,13 @@ To link your local repository with the remote one created on Github, you will ne
 
 ## CHANGELOG
 
+Version 1.1.0
+----------------------------
+
+- Checkout
+- Clone
+
+
 Version 1.0.0
 ----------------------------
 
@@ -101,7 +108,6 @@ Version 1.0.0
 - Remote
 - Add
 - Pull
-- Clone
 - Merge
 
 I also added many error handling inside previous and current functionnalities.

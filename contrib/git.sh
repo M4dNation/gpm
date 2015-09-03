@@ -52,6 +52,7 @@ CONFIG_USERMAIL=""
 BRANCH_IN=""
 BRANCH_FROM=""
 REPOSITORY=""
+DIRECTORY=""
 
 # Functionnalities
 
@@ -255,10 +256,15 @@ clone()
 	if [ -d .git ]; then
 		echo "$RED"
 		echo "This directory is already a git repository !"
-		echo "Are you sure you want to clone an other repository here ?"
+		echo "Are you sure you want to clone an other repository here ? $NORMAL"
 		read RESPONSE
 		if [ "$RESPONSE" = "$NO" ]; then
 			return 0;
+		else
+			echo "$CYAN"
+			echo "Please, enter a complete repository address : $NORMAL"
+			read REPOSITORY
+			git clone REPOSITORY
 		fi
 	else
 		echo "$CYAN"
