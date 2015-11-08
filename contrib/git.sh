@@ -330,6 +330,7 @@ commit()
 		echo "$CYAN"
 		echo "Please, enter a commit description : $NORMAL"
 		read COMMIT_DESCRIPTION
+		echo -e "\n$COMMIT_DESCRIPTION" > "$COMMIT_TITLE"
 		echo "$CYAN"
 		echo "Would you like to add all files to be commited ? $NORMAL"
 		read RESPONSE
@@ -361,13 +362,12 @@ commit()
 			echo "$CYAN"
 			echo "Please, enter a remote branch name for your commit : $NORMAL"
 			read REMOTE_BRANCH_NAME
-			git commit -m "$COMMIT_TITLE \n $COMMIT_DESCRIPTION"
+			git commit -m "$COMMIT_TITLE"
 			git push origin $REMOTE_BRANCH_NAME
-
 			echo "$GREEN"
 			echo "Modification successfully commited and pushed on the remote branch $REMOTE_BRANCH_NAME ! $NORMAL"
 		else
-			git commit -m "$COMMIT_TITLE \n $COMMIT_DESCRIPTION"
+			git commit -m "$COMMIT_TITLE"
 			echo "$GREEN"
 			echo "Modification successfully commited ! $NORMAL"
 		fi
