@@ -330,7 +330,7 @@ commit()
 		echo "$CYAN"
 		echo "Please, enter a commit description : $NORMAL"
 		read COMMIT_DESCRIPTION
-		MESSAGE=`echo -e "\n $COMMIT_DESCRIPTION"`
+		MESSAGE=`echo "\n$COMMIT_DESCRIPTION"`
 		echo "$CYAN"
 		echo "Would you like to add all files to be commited ? $NORMAL"
 		COMMIT_TITLE="$COMMIT_TITLE $MESSAGE";
