@@ -44,6 +44,7 @@ OPTIONS=""
 RESPONSE=""
 FILENAME=""
 AUTHOR_EMAIL=""
+COMMIT_TITLE=""
 COMMIT_DESCRIPTION=""
 LOCAL_BRANCH_NAME=""
 REMOTE_BRANCH_NAME=""
@@ -324,6 +325,9 @@ commit()
 {
 	if [ -d .git ]; then
 		echo "$CYAN"
+		echo "Please, enter a commit title : $NORMAL"
+		read COMMIT_TITLE
+		echo "$CYAN"
 		echo "Please, enter a commit description : $NORMAL"
 		read COMMIT_DESCRIPTION
 		echo "$CYAN"
@@ -344,9 +348,10 @@ commit()
 		echo "Would you like to see all information about the commit ? $NORMAL"
 		read RESPONSE
 		if [ "$RESPONSE" = "$YES" ]; then
-			echo "\nCommit description"
+			echo "\nCommit TITLE"
 			echo "--------------------------------------"
-			echo "$COMMIT_DESCRIPTION"
+			echo "$COMMIT_TITLE"
+			echo "\n $COMMIT_DESCRIPTION"
 			git status
 		fi
 		echo "$CYAN"
@@ -356,13 +361,13 @@ commit()
 			echo "$CYAN"
 			echo "Please, enter a remote branch name for your commit : $NORMAL"
 			read REMOTE_BRANCH_NAME
-			git commit -m "$COMMIT_DESCRIPTION"
+			git commit -m "$COMMIT_TITLE \n $COMMIT_DESCRIPTION"
 			git push origin $REMOTE_BRANCH_NAME
 
 			echo "$GREEN"
 			echo "Modification successfully commited and pushed on the remote branch $REMOTE_BRANCH_NAME ! $NORMAL"
 		else
-			git commit -m "$COMMIT_DESCRIPTION"
+			git commit -m "$COMMIT_TITLE \n $COMMIT_DESCRIPTION"
 			echo "$GREEN"
 			echo "Modification successfully commited ! $NORMAL"
 		fi
