@@ -644,7 +644,7 @@ reset()
 			git log --oneline
 		fi
 		echo "$CYAN"
-		echo "Do you want to reset BOTH staging area and working directory ? $NORMAL"
+		echo "Do you want to reset both staging area and working directory ? $NORMAL"
 		read RESPONSE
 		if [ "$RESPONSE" = "$YES" ];then
 			git reset --hard
@@ -670,6 +670,12 @@ reset()
 						echo "$GREEN"
 						echo "Branch successfully reset to commit N°$COMMIT_HASH ! $NORMAL"
 						echo "$CYAN"
+						echo "Would you like to clean your current branch now ? $NORMAL"
+						read RESPONSE
+						if [ "$RESPONSE" = "$YES" ];then
+							clean
+						fi
+						echo "$CYAN"
 						echo "Would you like to push reset commit ? $NORMAL"
 						read RESPONSE
 						if [ "$RESPONSE" = "$YES" ];then
@@ -682,18 +688,49 @@ reset()
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to revert. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to reset. $NORMAL"
 	fi
 }
 
 clean()
 {
 	if [ -d .git ]; then
-		exit
+		echo "$CYAN"
+		echo "Would you like to see the files to be cleaned ? $NORMAL"
+		read RESPONSE
+		if [ "$RESPONSE" = "$YES" ];then
+			git clean -n
+		fi
+		echo "$CYAN"
+		echo "Would you like to remove both untracked files and untracked directories ? $NORMAL"
+		read RESPONSE
+		if [ "$RESPONSE" = "$YES" ];then
+			git clean -df
+			echo "$GREEN"
+			echo "Untracked files and directories successfully deleted ! $NORMAL"
+		else
+			echo "$CYAN"
+			echo "Would you like to remove only untracked files ? $NORMAL"
+			read RESPONSE
+			if [ "$RESPONSE" = "$YES" ];then
+				git clean -f
+				echo "$GREEN"
+				echo "Untracked files successfully deleted ! $NORMAL"
+			else
+				echo "$CYAN"
+				echo "Would you like to remove git ignored file as well ? $NORMAL"
+				read RESPONSE
+				if [ "$RESPONSE" = "$YES" ];then
+					git clean -xf
+					echo "$GREEN"
+					echo "Untracked and ignored files successfully deleted ! $NORMAL"
+				fi
+			fi
+		fi
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to revert. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to clean. $NORMAL"
 	fi
 }
 
@@ -727,6 +764,9 @@ while [ $LOOP -gt 0 ]; do
 	fi
 	if [ "$ACTION" = "$ACTION_CLONE" ];then
 		clone
+	fi
+	if [ "$ACTION" = "$ACTION_CLEAN" ];then
+		clean
 	fi
 	if [ "$ACTION" = "$ACTION_COMMIT" ];then
 		commit
