@@ -121,7 +121,7 @@ add()
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to add. $NORMAL"
 	fi
 }
 
@@ -165,7 +165,7 @@ log()
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to display log. $NORMAL"
 	fi
 }
 
@@ -204,7 +204,7 @@ push()
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to push. $NORMAL"
 	fi
 }
 
@@ -221,7 +221,7 @@ pull()
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to pull. $NORMAL"
 	fi
 }
 
@@ -247,7 +247,7 @@ merge()
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to merge. $NORMAL"
 	fi
 }
 
@@ -316,7 +316,7 @@ config()
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to configure. $NORMAL"
 	fi
 }
 
@@ -454,7 +454,7 @@ remote()
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to configure remote. $NORMAL"
 	fi
 }
 
@@ -575,7 +575,7 @@ checkout()
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to commit. $NORMAL"
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to checkout. $NORMAL"
 	fi
 }
 
