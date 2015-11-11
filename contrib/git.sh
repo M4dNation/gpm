@@ -643,11 +643,13 @@ reset()
 		else
 			echo "$CYAN"
 			echo "Do you want to reset only staging area ? $NORMAL"
+			read RESPONSE
 			if [ "$RESPONSE" = "$YES" ];then
 				git reset
 			else
 				echo "$CYAN"
 				echo "Do you want to reset all changes since a commit ? $NORMAL"
+				read RESPONSE
 				if [ "$RESPONSE" = "$YES" ];then
 					echo "$CYAN"
 					echo "Please, enter the commit hash you want to go back to ? $NORMAL"
