@@ -606,7 +606,7 @@ revert()
 		echo "Please, enter the commit hash you want to go back to ? $NORMAL"
 		read COMMIT_HASH
 		echo "$CYAN"
-		echo "YOu are about to go back to commit N°$COMMIT_HASH, are you sure ? $NORMAL"
+		echo "You are about to go back to commit N°$COMMIT_HASH, are you sure ? $NORMAL"
 		read RESPONSE
 		if [ "$RESPONSE" = "$YES" ];then
 			git revert $COMMIT_HASH
@@ -629,7 +629,39 @@ revert()
 reset()
 {
 	if [ -d .git ]; then
-		exit
+		echo "$CYAN"
+		echo "Do you want to see project history first ? $NORMAL"
+		read RESPONSE
+		if [ "$RESPONSE" = "$YES" ];then
+			git log --oneline
+		fi
+		echo "$CYAN"
+		echo "Do you want to reset both staging area and working directory ?"
+		if [ "$RESPONSE" = "$YES" ];then
+			git reset --hard
+		else
+			echo "$CYAN"
+			echo "Do you want to reset only staging area ? $NORMAL"
+			if [ "$RESPONSE" = "$YES" ];then
+				git reset
+			else
+				echo "$CYAN"
+				echo "Do you want to reset all changes since a commit ? $NORMAL"
+				if [ "$RESPONSE" = "$YES" ];then
+					echo "$CYAN"
+					echo "Please, enter the commit hash you want to go back to ? $NORMAL"
+					read COMMIT_HASH
+					echo "$CYAN"
+					echo "You are about to resel all commit from now to N°$COMMIT_HASH, are you sure ? $NORMAL"
+					read RESPONSE
+					if [ "$RESPONSE" = "$YES" ];then
+						git reset --hard $COMMIT_HASH
+						echo "$GREEN"
+						echo "Branch successfully reverted to commit N°$COMMIT_HASH ! $NORMAL"
+					fi
+				fi
+			fi
+		fi
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
