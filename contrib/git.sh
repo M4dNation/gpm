@@ -25,15 +25,19 @@ ACTION_PULL="pull"
 ACTION_HELP="help"
 ACTION_EXIT="exit"
 ACTION_CLEAR="clear"
+ACTION_CLEAN="clean"
 ACTION_MERGE="merge"
 ACTION_CLONE="clone"
 ACTION_RESET="reset"
+ACTION_REVERT="revert"
 ACTION_BRANCH="branch"
 ACTION_REBASE="rebase"
 ACTION_COMMIT="commit"
 ACTION_CONFIG="config"
 ACTION_REMOVE="remove"
 ACTION_REMOTE="remote"
+ACTION_REFLOG="reflog"
+ACTION_STATUS="status"
 ACTION_CHECKOUT="checkout"
 
 # Variables
@@ -45,6 +49,7 @@ RESPONSE=""
 FILENAME=""
 AUTHOR_EMAIL=""
 COMMIT_TITLE=""
+COMMIT_HASH=""
 COMMIT_DESCRIPTION=""
 LOCAL_BRANCH_NAME=""
 REMOTE_NAME=""
@@ -588,6 +593,57 @@ checkout()
 	fi
 }
 
+revert()
+{
+	if [ -d .git ]; then
+		echo "$CYAN"
+		echo "Do you want to see project history first ? $NORMAL"
+		read RESPONSE
+		if [ "$RESPONSE" = "$YES" ];then
+			git log --oneline
+		fi
+		echo "$CYAN"
+		echo "Please, enter the commit hash you want to go back to ? $NORMAL"
+		read COMMIT_HASH
+		echo "$CYAN"
+		echo "YOu are about to go back to commit N°$COMMIT_HASH, are you sure ? $NORMAL"
+		read RESPONSE
+		if [ "$RESPONSE" = "$YES" ];then
+			git revert $COMMIT_HASH
+			echo "$GREEN"
+			echo "Branch successfully reverted to commit N°$COMMIT_HASH ! $NORMAL"
+		fi
+	else
+		echo "$RED"
+		echo "This directory isn't a git repository."
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to revert. $NORMAL"
+	fi
+}
+
+reset()
+{
+	if [ -d .git ]; then
+		exit
+	else
+		echo "$RED"
+		echo "This directory isn't a git repository."
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to revert. $NORMAL"
+	fi
+}
+
+clean()
+{
+	if [ -d .git ]; then
+		exit
+	else
+		echo "$RED"
+		echo "This directory isn't a git repository."
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to revert. $NORMAL"
+	fi
+}
+
+
+
 
 ####### Main ###########
 
@@ -625,6 +681,12 @@ while [ $LOOP -gt 0 ]; do
 	fi
 	if [ "$ACTION" = "$ACTION_REMOTE" ];then
 		remote
+	fi
+	if [ "$ACTION" = "$ACTION_REVERT" ];then
+		revert
+	fi
+	if [ "$ACTION" = "$ACTION_RESET" ];then
+		reset
 	fi
 	if [ "$ACTION" = "$ACTION_BRANCH" ];then
 		branch
