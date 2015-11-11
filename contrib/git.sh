@@ -22,7 +22,6 @@ ACTION_LOG="log"
 ACTION_INIT="init"
 ACTION_PUSH="push"
 ACTION_PULL="pull"
-ACTION_HELP="help"
 ACTION_EXIT="exit"
 ACTION_CLEAR="clear"
 ACTION_CLEAN="clean"
@@ -692,6 +691,28 @@ reset()
 	fi
 }
 
+reflog()
+{
+	if [ -d .git ]; then
+		git reflog
+	else
+		echo "$RED"
+		echo "This directory isn't a git repository."
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to reflog. $NORMAL"
+	fi
+}
+
+status()
+{
+	if [ -d .git ]; then
+		git status
+	else
+		echo "$RED"
+		echo "This directory isn't a git repository."
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to see status. $NORMAL"
+	fi
+}
+
 clean()
 {
 	if [ -d .git ]; then
@@ -780,17 +801,20 @@ while [ $LOOP -gt 0 ]; do
 	if [ "$ACTION" = "$ACTION_REVERT" ];then
 		revert
 	fi
+	if [ "$ACTION" = "$ACTION_REFLOG" ];then
+		reflog
+	fi
 	if [ "$ACTION" = "$ACTION_RESET" ];then
 		reset
+	fi
+	if [ "$ACTION" = "$ACTION_STATUS" ];then
+		status
 	fi
 	if [ "$ACTION" = "$ACTION_BRANCH" ];then
 		branch
 	fi
 	if [ "$ACTION" = "$ACTION_CHECKOUT" ];then
 		checkout
-	fi
-	if [ "$ACTION" = "$ACTION_HELP" ];then
-		gpmhelp
 	fi
 	if [ "$ACTION" = "$ACTION_CLEAR" ];then
 		clear
