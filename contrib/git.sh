@@ -19,6 +19,7 @@ BOTH="both"
 
 ACTION_ADD="add"
 ACTION_LOG="log"
+ACTION_DIFF="diff"
 ACTION_INIT="init"
 ACTION_PUSH="push"
 ACTION_PULL="pull"
@@ -691,6 +692,22 @@ reset()
 	fi
 }
 
+rebase()
+{
+	if [ -d .git ]; then
+		echo "$CYAN"
+		echo "Please, enter the branch name you want to rebase on ? $NORMAL"
+		read BRANCH_FROM
+		git rebase $BRANCH_FROM
+		echo "$GREEN"
+		echo "Branch successfully rebased on branch $BRANCH_FROM ! $NORMAL"
+	else
+		echo "$RED"
+		echo "This directory isn't a git repository."
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to see status. $NORMAL"
+	fi
+}
+
 reflog()
 {
 	if [ -d .git ]; then
@@ -706,6 +723,17 @@ status()
 {
 	if [ -d .git ]; then
 		git status
+	else
+		echo "$RED"
+		echo "This directory isn't a git repository."
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to see status. $NORMAL"
+	fi
+}
+
+diff()
+{
+	if [ -d .git ]; then
+		git diff
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
@@ -801,6 +829,9 @@ while [ $LOOP -gt 0 ]; do
 	if [ "$ACTION" = "$ACTION_REVERT" ];then
 		revert
 	fi
+	if [ "$ACTION" = "$ACTION_REBASE" ];then
+		rebase
+	fi
 	if [ "$ACTION" = "$ACTION_REFLOG" ];then
 		reflog
 	fi
@@ -809,6 +840,9 @@ while [ $LOOP -gt 0 ]; do
 	fi
 	if [ "$ACTION" = "$ACTION_STATUS" ];then
 		status
+	fi
+	if [ "$ACTION" = "$ACTION_DIFF" ];then
+		diff
 	fi
 	if [ "$ACTION" = "$ACTION_BRANCH" ];then
 		branch
