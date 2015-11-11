@@ -88,11 +88,31 @@ You can skip this section if you don't want to use a remote website to handle yo
 
 A lot of developers use remote website to handle their git configuration, in order to find informations the easiest way possible. The most known of this website is Github : www.github.com .
 
-To link your local repository with the remote one created on Github, you will need to use the remote command.
+To link your local repository with the remote one created on Github, you will need to use the **remote** command.
+First, GPM asks you if you want to see your current remote configuration. If you agree, it will show you both remotes name and URL, so you can be fully aware of what is your current configuration and what changes you wanna make.
 
+After that, you can either add or remove a remote repository from your configuration. All you need to do is answer both name and URL question to add the new one (just the name question is necessary to remove an already configured remote repository).
+
+#### First development
+
+From now on, we will take as granted that you use GPM inside a development project, and you have few changes to archive in your repository.
+
+To do so, you need to use the **commit** command.
+Provide asked informations and GPM will ask you if you want to push your commit on a remote branch.
+If you do so, you must have configured a remote repository, as seen in the previous section.
 
 
 ## CHANGELOG
+
+Version 2.0.0
+----------------------------
+- Status
+- Diff
+- Revert
+- Reset
+- Rebase
+- Reflog
+- Clean
 
 Version 1.1.0
 ----------------------------
