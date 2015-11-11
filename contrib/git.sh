@@ -191,7 +191,6 @@ init()
 			echo "You can add here your options to customize your repository : $NORMAL"
 			read OPTIONS
 			git init $OPTIONS
-
 			echo "$GREEN"
 			echo "Repository successfully initialized ! $NORMAL"
 		fi
@@ -205,7 +204,16 @@ push()
 		echo "$CYAN"
 		echo "Please, enter a remote branch to push code on : $NORMAL"
 		read REMOTE_BRANCH_NAME
-		git push origin "$REMOTE_BRANCH_NAME"
+		echo "$CYAN"
+		echo "Do you want to force push in any case ? $NORMAL"
+		read RESPONSE
+		if [ "$RESPONSE" = "$YES" ];then
+			git push -f origin "$REMOTE_BRANCH_NAME"
+			echo "$GREEN"
+			echo "Content successfully pushed on branch $REMOTE_BRANCH_NAME ! $NORMAL"
+		else
+			git push origin $REMOTE_BRANCH_NAME
+		fi
 		echo "$GREEN"
 		echo "Content successfully pushed on branch $REMOTE_BRANCH_NAME ! $NORMAL"
 	else
@@ -636,7 +644,7 @@ reset()
 			git log --oneline
 		fi
 		echo "$CYAN"
-		echo "Do you want to reset BOTH staging area and working directory ?"
+		echo "Do you want to reset BOTH staging area and working directory ? $NORMAL"
 		read RESPONSE
 		if [ "$RESPONSE" = "$YES" ];then
 			git reset --hard
@@ -660,7 +668,13 @@ reset()
 					if [ "$RESPONSE" = "$YES" ];then
 						git reset --hard $COMMIT_HASH
 						echo "$GREEN"
-						echo "Branch successfully reverted to commit N°$COMMIT_HASH ! $NORMAL"
+						echo "Branch successfully reset to commit N°$COMMIT_HASH ! $NORMAL"
+						echo "$CYAN"
+						echo "Would you like to push reset commit ? $NORMAL"
+						read RESPONSE
+						if [ "$RESPONSE" = "$YES" ];then
+							push
+						fi
 					fi
 				fi
 			fi
