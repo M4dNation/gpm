@@ -612,6 +612,12 @@ revert()
 			git revert $COMMIT_HASH
 			echo "$GREEN"
 			echo "Branch successfully reverted to commit N°$COMMIT_HASH ! $NORMAL"
+			echo "$CYAN"
+			echo "Would you like to push reverted commit ? $NORMAL"
+			read RESPONSE
+			if [ "$RESPONSE" = "$YES" ];then
+				push
+			fi
 		fi
 	else
 		echo "$RED"
