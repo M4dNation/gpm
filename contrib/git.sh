@@ -606,7 +606,7 @@ revert()
 		echo "Please, enter the commit hash you want to go back to ? $NORMAL"
 		read COMMIT_HASH
 		echo "$CYAN"
-		echo "You are about to go back to commit N°$COMMIT_HASH, are you sure ? $NORMAL"
+		echo "YOu are about to go back to commit N°$COMMIT_HASH, are you sure ? $NORMAL"
 		read RESPONSE
 		if [ "$RESPONSE" = "$YES" ];then
 			git revert $COMMIT_HASH
