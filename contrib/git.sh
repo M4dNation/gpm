@@ -47,6 +47,8 @@ AUTHOR_EMAIL=""
 COMMIT_TITLE=""
 COMMIT_DESCRIPTION=""
 LOCAL_BRANCH_NAME=""
+REMOTE_NAME=""
+REMOTE_URL=""
 REMOTE_BRANCH_NAME=""
 CONFIG_USERNAME=""
 CONFIG_USERMAIL=""
@@ -384,14 +386,15 @@ remote()
 {
 	if [ -d .git ]; then
 		echo "$CYAN"
-		echo "Would you like to see URL(s) of your remote(s) repository ?"
+		echo "Would you like to see your remote(s) repository ? $NORMAL"
 		read RESPONSE
-		echo "Displaying repository log:"
-		echo "------------------------------------------"
 		if [ "$RESPONSE" = "$YES" ]; then
+			echo "$GREEN"
+			echo "Displaying repository log:"
+			echo "------------------------------------------------"
 			git remote -v
+			echo "------------------------------------------------"
 			echo "$CYAN"
-			echo "------------------------------------------"
 			echo "Do you want to save this in a file ? $NORMAL"
 			read RESPONSE
 			if [ "$RESPONSE" = "$YES" ]; then
@@ -420,35 +423,41 @@ remote()
 				echo "Remote(s) informations successfully saved in $FILENAME ! $NORMAL"
 			fi
 		else
-			git remote
 			echo "$CYAN"
-			echo "------------------------------------------"
-			echo "Do you want to save this in a file ? $NORMAL"
+			echo "Would you like to add a new remote repository ? $NORMAL"
 			read RESPONSE
 			if [ "$RESPONSE" = "$YES" ]; then
 				echo "$CYAN"
-				echo "Please, enter filename : $NORMAL"
-				read FILENAME
+				echo "Please, enter remote name : $NORMAL"
+				read REMOTE_NAME
 				echo "$CYAN"
-				echo "Erase content of $FILENAME ? $NORMAL"
+				echo "Please, enter remote URL : $NORMAL"
+				read REMOTE_URL
+				echo "$CYAN"
+				echo "You're about to add $REMOTE_URL as $REMOTE_NAME, are you sure ? $NORMAL"
 				read RESPONSE
-				if [ "$RESPONSE" = "$YES" ];then
+				if [ "$RESPONSE" = "$YES" ]; then
+					git remote add $REMOTE_NAME $REMOTE_URL
+					echo "$GREEN"
+					echo "Remote $REMOTE_NAME successfully added ! $NORMAL"
+				fi 
+			else
+				echo "$CYAN"
+				echo "Would you like to delete a remote repository ? $NORMAL"
+				read RESPONSE
+				if [ "$RESPONSE" = "$YES" ]; then
 					echo "$CYAN"
-					echo "You are about to save remote(s) informations in $FILENAME deleting all its content, are you sure ? $NORMAL"
-					read RESPONSE
-					if [ "$RESPONSE" = "$YES" ];then
-						git remote > $FILENAME
-					fi
-				else
+					echo "Please, enter remote name : $NORMAL"
+					read REMOTE_NAME
 					echo "$CYAN"
-					echo "You are about to add remote(s) informations to $FILENAME, are you sure ? $NORMAL"
+					echo "You're about to delete $REMOTE_NAME, are you sure ? $NORMAL"
 					read RESPONSE
-					if [ "$RESPONSE" = "$YES" ];then
-						git remote >> $FILENAME
+					if [ "$RESPONSE" = "$YES" ]; then
+						git remote rm $REMOTE_NAME
+						echo "$GREEN"
+						echo "Remote $REMOTE_NAME successfully removed ! $NORMAL"
 					fi
 				fi
-				echo "$GREEN"
-				echo "Remote(s) informations successfully saved in $FILENAME ! $NORMAL"
 			fi
 		fi	
 	else
