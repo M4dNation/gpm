@@ -636,7 +636,7 @@ reset()
 			git log --oneline
 		fi
 		echo "$CYAN"
-		echo "Do you want to reset both staging area and working directory ?"
+		echo "Do you want to reset BOTH staging area and working directory ?"
 		if [ "$RESPONSE" = "$YES" ];then
 			git reset --hard
 		else
