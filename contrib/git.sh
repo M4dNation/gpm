@@ -213,9 +213,9 @@ push()
 			echo "Content successfully pushed on branch $REMOTE_BRANCH_NAME ! $NORMAL"
 		else
 			git push origin $REMOTE_BRANCH_NAME
+			echo "$GREEN"
+			echo "Content successfully pushed on branch $REMOTE_BRANCH_NAME ! $NORMAL"
 		fi
-		echo "$GREEN"
-		echo "Content successfully pushed on branch $REMOTE_BRANCH_NAME ! $NORMAL"
 	else
 		echo "$RED"
 		echo "This directory isn't a git repository."
