@@ -100,7 +100,14 @@ From now on, we will take as granted that you use GPM inside a development proje
 To do so, you need to use the **commit** command.
 Provide asked informations and GPM will ask you if you want to push your commit on a remote branch.
 If you do so, you must have configured a remote repository, as seen in the previous section.
+You can also choose to push your commit manualy, using the **push** command. 
 
+Either way, GPM will ask you to enter the remote branch name where it can push your commit to. 
+Just enter the name and press enter key to see how magic it is. 
+No parameter, no difficult command, you just commited and pushed stuff in one blow without any difficulties.
+
+Note that you can also pull some work from the remote branch using the **pull** command.
+Pull works the same way as push.
 
 ## CHANGELOG
 
