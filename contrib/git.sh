@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Output colors
-NORMAL="\\033[0;39m"
-RED="\\033[1;31m"
-GREEN="\\033[1;32m"
-YELLOW="\\033[1;33m"
-BLUE="\\033[1;34m"
-PINK="\\033[1;35m"
-CYAN="\\033[1;36m"
-WHITE="\\033[1;38m"
-GREY="\\033[1;30m"
+NORMAL="\033[0;39m"
+RED="\033[1;31m"
+GREEN="\033[1;32m"
+YELLOW="\033[1;33m"
+BLUE="\033[1;34m"
+PINK="\033[1;35m"
+CYAN="\033[1;36m"
+WHITE="\033[1;38m"
+GREY="\033[1;30m"
 
 # Value
 YES="yes"
@@ -69,8 +69,8 @@ DIRECTORY=""
 add()
 {
 	if [ -d .git ]; then
-		echo "$CYAN"
-		echo "You are about to add files to be commited. Would you like to see current branch' status first ? $NORMAL"
+		echo -e "$CYAN"
+		echo -e "You are about to add files to be commited. Would you like to see current branch' status first ? $NORMAL"
 		read RESPONSE
 		if [ "$RESPONSE" = "$YES" ]; then
 			git status
@@ -278,7 +278,7 @@ clone()
 			return 0;
 		else
 			echo "$CYAN"
-			echo "Please, enter a complete repository address : $NORMAL"
+			echo "Please, enter repository's URL : $NORMAL"
 			read REPOSITORY
 			git clone REPOSITORY
 		fi
