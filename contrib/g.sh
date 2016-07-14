@@ -238,6 +238,10 @@ diff()
 	fi
 }
 
+##
+# add
+# This function is used in order to add files to the repository index.
+##
 add()
 {
 	if [ -d .git ]
@@ -273,7 +277,7 @@ add()
 		fi
 		if isTrue $ADD_ALL 
 		then
-			git add --all $OPTIONS
+			git add $OPTIONS --all 
 			echo -e "$COLOR_INFO"
 			echo "Displaying tracked file:"
 			echo -e "-------------------------------------- $COLOR_NORMAL"
@@ -291,7 +295,7 @@ add()
 				then
 					if [ -d "$FILENAME" ]
 					then
-						git add "$FILENAME" $OPTIONS
+						git add $OPTIONS "$FILENAME"
 						echo -e "$COLOR_SUCCESS"
 						echo -e "Directory $FILENAME successfully added ! $NORMAL"
 					else
@@ -321,6 +325,160 @@ add()
 		echo -e "$COLOR_FAILURE"
 		echo "This directory isn't a git repository."
 		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to add."
+		echo -e "$COLOR_NORMAL"
+	fi
+}
+
+##
+# commit
+# This function is used in order to commit changes and enable versionning for theses changes
+##
+commit()
+{
+	if [ -d .git ]
+	then
+		OPTIONS=""
+		if isTrue $COMMIT_QUIET
+		then
+			OPTIONS="$OPTIONS --quiet"
+		fi
+		if isTrue $COMMIT_VERBOSE
+		then
+			OPTIONS="$OPTIONS --verbose"
+		fi
+		echo -e "$COLOR_INFO"
+		echo -e "Please, enter a commit title : $COLOR_NORMAL"
+		read COMMIT_TITLE
+		echo -e "$COLOR_INFO"
+		echo -e "Please, enter a commit description : $COLOR_NORMAL"
+		read COMMIT_DESCRIPTION
+		MESSAGE=`echo "\n$COMMIT_DESCRIPTION"`
+		add
+		echo -e "$COLOR_INFO"
+		echo "You are about to make a commit on your current branch."
+		echo -e "Would you like to see all information about the commit ? $COLOR_NORMAL"
+		if confirm 
+		then
+			echo "\nCommit TITLE"
+			echo "--------------------------------------"
+			echo "$COMMIT_TITLE"
+			echo -e "\n $COMMIT_DESCRIPTION"
+			status
+		fi
+		echo -e "$COLOR_INFO"
+		echo -e "Would you like to push your commit on a remote branch ? $COLOR_NORMAL"
+		if confirm 
+		then
+			git commit $OPTIONS -m "$COMMIT_TITLE"
+			echo -e "$COLOR_SUCCESS"
+			echo -e "Modification successfully commited."
+			echo -e "$COLOR_NORMAL"
+			push
+		else
+			git commit $OPTIONS -m "$COMMIT_TITLE"
+			echo -e "$COLOR_SUCCESS"
+			echo -e "Modification successfully commited ! $COLOR_NORMAL"
+		fi
+	else
+		echo -e "$COLOR_FAILURE"
+		echo "This directory isn't a git repository."
+		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to commit."
+		echo -e "$COLOR_NORMAL"
+	fi
+}
+
+# Push : Use it to push local versionning on a remote branch
+push()
+{
+	if [ -d .git ]
+	then
+		OPTIONS=""
+		if isTrue $PUSH_ALL
+		then
+			OPTIONS="$OPTIONS --all"
+		fi
+		if isTrue $PUSH_DRY
+		then
+			OPTIONS="$OPTIONS --dry-run"
+		fi
+		if isTrue $PUSH_FORCE
+		then
+			OPTIONS="$OPTIONS --force"
+		fi
+		if isTrue $PUSH_QUIET
+		then
+			OPTIONS="$OPTIONS --quiet"
+		fi
+		if isTrue $PUSH_VERBOSE
+		then
+			OPTIONS="$OPTIONS --verbose"
+		fi
+		if isTrue $PUSH_IPV4
+		then
+			OPTIONS="$OPTIONS --ipv4"
+		fi
+		if isTrue $PUSH_IPV6
+		then
+			OPTIONS="$OPTIONS --ipv6"
+		fi
+		echo -e "$COLOR_INFO"
+		echo -e "Please, enter a remote branch to push code on : $COLOR_NORMAL"
+		read REMOTE_BRANCH_NAME
+		git push $OPTIONS origin $REMOTE_BRANCH_NAME
+		echo -e "$COLOR_SUCCESS"
+		echo -e "Content successfully pushed on branch $REMOTE_BRANCH_NAME ! $COLOR_NORMAL"
+	else
+		echo -e "$COLOR_FAILURE"
+		echo "This directory isn't a git repository."
+		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to push."
+		echo -e "$COLOR_NORMAL"
+	fi
+}
+
+# Pull : Use it to pull remote versionning on a local branch
+pull()
+{
+	if [ -d .git ]
+	then
+		OPTIONS=""
+		if isTrue $PULL_ALL
+		then
+			OPTIONS="$OPTIONS --all"
+		fi
+		if isTrue $PULL_STAT
+		then
+			OPTIONS="$OPTIONS --stat"
+		fi
+		if isTrue $PULL_FORCE
+		then
+			OPTIONS="$OPTIONS --force"
+		fi
+		if isTrue $PULL_QUIET
+		then
+			OPTIONS="$OPTIONS --quiet"
+		fi
+		if isTrue $PULL_VERBOSE
+		then
+			OPTIONS="$OPTIONS --verbose"
+		fi
+		if isTrue $PULL_IPV4
+		then
+			OPTIONS="$OPTIONS --ipv4"
+		fi
+		if isTrue $PULL_IPV6
+		then
+			OPTIONS="$OPTIONS --ipv6"
+		fi
+		echo -e "$COLOR_INFO"
+		echo -e "Please, enter a remote branch to pull code from : $COLOR_NORMAL"
+		read REMOTE_BRANCH_NAME
+		git pull $OPTIONS origin "$REMOTE_BRANCH_NAME"
+		echo -e "$COLOR_SUCCESS"
+		echo -e "Content successfully pulled from branch $REMOTE_BRANCH_NAME ! $COLOR_NORMAL"
+	else
+		echo -e "$COLOR_FAILURE"
+		echo "This directory isn't a git repository."
+		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to pull."
 		echo -e "$COLOR_NORMAL"
 	fi
 }
@@ -356,5 +514,17 @@ while [ $LOOP -gt 0 ]; do
 	if isActionAdd $ACTION
 	then
 		add
+	fi
+	if isActionCommit $ACTION
+	then
+		commit
+	fi
+	if isActionPush $ACTION
+	then
+		push
+	fi
+	if isActionPull $ACTION
+	then
+		push
 	fi
 done
