@@ -67,14 +67,14 @@ config()
 	if [ -d .git ] 
 	then
 		echo -e "$COLOR_NORMAL"
-		if isGlobalConfiguration $CONFIG_SCOPE
+		if isGlobalConfiguration
 		then
 			git config --global user.name "$CONFIG_USERNAME"
 			git config --global user.email "$CONFIG_USERMAIL"
 			echo -e "$COLOR_SUCCESS"
 			echo -e "Global configuration successfully saved ! $COLOR_NORMAL"
 		else
-			if isSystemConfiguration $CONFIG_SCOPE
+			if isSystemConfiguration
 			then
 				git config --system user.name "$CONFIG_USERNAME"
 				git config --system user.email "$CONFIG_USERMAIL"
@@ -213,15 +213,15 @@ diff()
 		then
 			OPTIONS="$OPTIONS --no-color"
 		fi
-		if isAlgorithmMinimal $DIFF_ALGORITHM
+		if isAlgorithmMinimal
 		then
 			OPTIONS="$OPTIONS --minimal"
 		fi
-		if isAlgorithmPatience $DIFF_ALGORITHM
+		if isAlgorithmPatience
 		then
 			OPTIONS="$OPTIONS --patience"
 		fi
-		if isAlgorithmHistogram $DIFF_ALGORITHM
+		if isAlgorithmHistogram
 		then
 			OPTIONS="$OPTIONS --histogram"
 		fi
@@ -388,7 +388,10 @@ commit()
 	fi
 }
 
-# Push : Use it to push local versionning on a remote branch
+##
+# push
+# This function is used in order to push local versionning on a remote branch
+##
 push()
 {
 	if [ -d .git ]
@@ -436,7 +439,10 @@ push()
 	fi
 }
 
-# Pull : Use it to pull remote versionning on a local branch
+##
+# pull
+# This function is used in order to pull remote versionning on a local branch
+##
 pull()
 {
 	if [ -d .git ]
@@ -484,6 +490,178 @@ pull()
 	fi
 }
 
+##
+# reset
+# This function is used in order to reset local versionning 
+##
+reset()
+{
+	if [ -d .git ]
+	then
+		echo -e "$COLOR_INFO"
+		echo -e "Do you want to see project history first ? $COLOR_NORMAL"
+		if confirm
+		then
+			log
+		fi
+		echo -e "$COLOR_INFO"
+		echo -e "Do you want to reset last commit ? $COLOR_NORMAL"
+		if confirm
+		then
+			git reset $RESET_MODE
+		else
+			echo -e "$COLOR_INFO"
+			echo -e "Do you want to reset all changes since a commit ? $COLOR_NORMAL"
+			if confirm 
+			then
+				echo -e "$COLOR_INFO"
+				echo -e "Please, enter the commit hash you want to go back to ? $COLOR_NORMAL"
+				read COMMIT_HASH
+				echo -e "$COLOR_INFO"
+				echo -e "You are about to resel all commit from now to N°$COMMIT_HASH, are you sure ? $COLOR_NORMAL"
+				if confirm
+				then
+					git reset $RESET_MODE $COMMIT_HASH
+					echo -e "$COLOR_SUCCESS"
+					echo -e "Branch is now at commit N°$COMMIT_HASH ! $COLOR_NORMAL"
+					echo -e "$COLOR_INFO"
+					echo -e "Would you like to clean your current branch now ? $COLOR_NORMAL"
+					if confirm
+					then
+						clean
+					fi
+					echo -e "$COLOR_INFO"
+					echo -e "Would you like to push reset commit ? $NORMAL"
+					if confirm
+					then
+						push
+					fi
+				fi
+			fi
+		fi
+	else
+		echo -e "$COLOR_FAILURE"
+		echo "This directory isn't a git repository."
+		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to reset."
+		echo -e "$COLOR_NORMAL"
+	fi
+}
+
+##
+# log
+# This function is used in order to show local versionning history
+##
+log()
+{
+	if [ -d .git ]
+	then
+		OPTIONS=""
+		if isTrue $LOG_SOURCE
+		then
+			OPTIONS="$OPTIONS --source"
+		fi
+		if isFormatOneline
+		then
+			OPTIONS="$OPTIONS --format=oneline"
+		fi
+		if isFormatShort
+		then
+			OPTIONS="$OPTIONS --format=short"
+		fi
+		if isFormatMedium
+		then
+			OPTIONS="$OPTIONS --format=medium"
+		fi
+		if isFormatFull
+		then
+			OPTIONS="$OPTIONS --format=full"
+		fi
+		if isFormatFuller
+		then
+			OPTIONS="$OPTIONS --format=fuller"
+		fi
+		if isFormatEmail
+		then
+			OPTIONS="$OPTIONS --format=email"
+		fi
+		if isFormatRaw
+		then
+			OPTIONS="$OPTIONS --format=raw"
+		fi
+		echo -e "$COLOR_INFO"
+		echo "Displaying repository log:"
+		echo "------------------------------------------"
+		git log $OPTIONS
+		echo -e "$COLOR_INFO"
+		echo "------------------------------------------"
+		echo -e "Do you want to save these logs in a file ? $COLOR_NORMAL"
+		if confirm
+		then
+			echo -e "$COLOR_INFO"
+			echo -e "Please, enter filename : $COLOR_NORMAL"
+			read FILENAME
+			echo -e "$COLOR_INFO"
+			echo -e "Erase content of $FILENAME ? $COLOR_NORMAL"
+			if confirm
+			then
+				echo -e "$COLOR_INFO"
+				echo -e "You are about to save git logs in $FILENAME deleting all its content, are you sure ? $COLOR_NORMAL"
+				if confirm
+				then
+					git log $OPTIONS > $FILENAME
+				fi
+			else
+				echo -e "$COLOR_INFO"
+				echo -e "You are about to add git logs to $FILENAME, are you sure ? $COLOR_NORMAL"
+				if confirm 
+				then
+					git log $OPTIONS >> $FILENAME
+				fi
+			fi
+			echo -e "$COLOR_SUCCESS"
+			echo -e "Logs successfully saved in $FILENAME ! $COLOR_NORMAL"
+		fi
+	else
+		echo -e "$COLOR_FAILURE"
+		echo "This directory isn't a git repository."
+		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to reset."
+		echo -e "$COLOR_NORMAL"
+	fi
+}
+
+clean()
+{
+	if [ -d .git ]
+	then
+		OPTIONS=""
+		if isTrue $CLEAN_FORCE
+		then
+			OPTIONS="$OPTIONS --force"
+		fi
+		if isTrue $CLEAN_DRY
+		then
+			OPTIONS="$OPTIONS --dry-run"
+		fi
+		if isTrue $CLEAN_QUIET
+		then
+			OPTIONS="$OPTIONS --quiet"
+		fi
+		if isTrue $CLEAN_DIR
+		then
+			OPTIONS="$OPTIONS -d"
+		fi
+		if isTrue $CLEAN_UNTRACKED
+		then
+			OPTIONS="$OPTIONS -x"
+		fi
+		git clean $OPTIONS
+	else
+		echo "$RED"
+		echo "This directory isn't a git repository."
+		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to clean. $NORMAL"
+	fi
+}
+
 # Main Loop
 #################################################################################
 
@@ -527,5 +705,17 @@ while [ $LOOP -gt 0 ]; do
 	if isActionPull $ACTION
 	then
 		pull
+	fi
+	if isActionReset $ACTION
+	then
+		reset
+	fi
+	if isActionLog $ACTION
+	then
+		log
+	fi
+	if isActionClean $ACTION
+	then
+		clean
 	fi
 done
