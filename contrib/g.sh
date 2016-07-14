@@ -629,6 +629,10 @@ log()
 	fi
 }
 
+##
+# clean
+# This function is used in order to clean local repository
+##
 clean()
 {
 	if [ -d .git ]
@@ -656,9 +660,74 @@ clean()
 		fi
 		git clean $OPTIONS
 	else
-		echo "$RED"
+		echo -e "$COLOR_FAILURE"
 		echo "This directory isn't a git repository."
-		echo "Please, create a git repository with the $NORMAL init $RED command before any attempt to clean. $NORMAL"
+		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to clean."
+		echo -e "$COLOR_NORMAL"
+	fi
+}
+
+##
+# remove
+# This function is used in order to remove local repository files from working tree or index
+##
+remove()
+{
+	if [ -d .git ]
+	then
+		OPTIONS=""
+		if isTrue $REMOVE_REC
+		then
+			OPTIONS="$OPTIONS -r"
+		fi
+		if isTrue $REMOVE_CACHED
+		then
+			OPTIONS="$OPTIONS --cached"
+		fi
+		if isTrue $REMOVE_DRY
+		then
+			OPTIONS="$OPTIONS --dry-run"
+		fi
+		if isTrue $REMOVE_FORCE
+		then
+			OPTIONS="$OPTIONS --force"
+		fi
+		if isTrue $REMOVE_QUIET
+		then
+			OPTIONS="$OPTIONS --quiet"
+		fi
+		FILENAME="FILENAME"
+		while [ "$FILENAME" != "" ]; 
+		do
+			echo -e "$COLOR_INFO"
+			echo -e "Please, enter the name of the file or directory you wish to remove (no name to stop) : $NORMAL"
+			read FILENAME
+			if [ "$FILENAME" != "" ]
+			then
+				if [ -d "$FILENAME" ]
+				then
+					git rm $OPTIONS "$FILENAME"
+					echo -e "$COLOR_SUCCESS"
+					echo -e "Directory $FILENAME successfully removed ! $NORMAL"
+				else
+					if [ -e "$FILENAME" ]
+					then
+						git rm $OPTIONS "$FILENAME"
+						echo -e "$COLOR_SUCCESS"
+						echo -e "File $FILENAME successfully removed ! $NORMAL"
+					else
+						echo -e "$COLOR_FAILURE"
+						echo "Unable to remove $FILENAME, file or directory not found !"
+					fi
+				fi
+
+			fi
+		done
+	else
+		echo -e "$COLOR_FAILURE"
+		echo "This directory isn't a git repository."
+		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to clean."
+		echo -e "$COLOR_NORMAL"
 	fi
 }
 
@@ -717,5 +786,9 @@ while [ $LOOP -gt 0 ]; do
 	if isActionClean $ACTION
 	then
 		clean
+	fi
+	if isActionRm $ACTION
+	then
+		remove
 	fi
 done
