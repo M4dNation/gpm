@@ -794,6 +794,10 @@ move()
 	fi
 }
 
+##
+# branch
+# This function is used in order create or delete branches
+##
 branch()
 {
 	if [ -d .git ]
@@ -847,7 +851,49 @@ branch()
 				return 0;
 			fi
 		fi
+	else
+		echo -e "$COLOR_FAILURE"
+		echo "This directory isn't a git repository."
+		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to create or delete branches."
+		echo -e "$COLOR_NORMAL"
+	fi
+}
+
+##
+# checkout
+# This function is used in order to checkout branches, files or changes
+##
+checkout()
+{
+	if [ -d .git ]; 
+	then
+		OPTIONS=""
+		if isTrue $CHECKOUT_FORCE
+		then
+			OPTIONS="$OPTIONS --force"
+		fi
+		if isTrue $CHECKOUT_QUIET
+		then
+			OPTIONS="$OPTIONS --quiet"
+		fi
+		echo -e "$COLOR_INFO"
+		echo -e "Do you want to change your current branch ? $COLOR_NORMAL"
+		if confirm
+		then
+			echo -e "$COLOR_INFO"
+			echo -e "Do you want to commit your work first ? $COLOR_NORMAL"
+			if confirm
+			then
+				commit
+				echo -e "$COLOR_INFO"
+				echo -e "Please enter a branch name: $COLOR_NORMAL"
+				read BRANCH_IN
+				git checkout $OPTIONS $BRANCH_IN
+			fi
 		else
+			return 0;
+		fi
+	else
 		echo -e "$COLOR_FAILURE"
 		echo "This directory isn't a git repository."
 		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to create or delete branches."
@@ -922,5 +968,9 @@ while [ $LOOP -gt 0 ]; do
 	if isActionBranch $ACTION
 	then
 		branch
+	fi
+	if isActionCheckout $ACTION
+	then
+		checkout
 	fi
 done
