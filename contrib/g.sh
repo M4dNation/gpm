@@ -732,8 +732,8 @@ remove()
 }
 
 ##
-# remove
-# This function is used in order to remove local repository files from working tree or index
+# move
+# This function is used in order to move or rename file from the index
 ##
 move()
 {
@@ -790,6 +790,67 @@ move()
 		echo -e "$COLOR_FAILURE"
 		echo "This directory isn't a git repository."
 		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to clean."
+		echo -e "$COLOR_NORMAL"
+	fi
+}
+
+branch()
+{
+	if [ -d .git ]
+	then
+		echo -e "$COLOR_INFO"
+		echo -e "Do you want to create a new branch ? $COLOR_NORMAL"
+		if confirm
+		then
+			echo -e "$COLOR_INFO"
+			echo -e "Please, enter a name for your branch : $COLOR_NORMAL"
+			read BRANCH_IN
+			echo -e "$COLOR_INFO"
+			echo -e "You are about to create a new branch with the same configuration of your current one, are you sure ? $COLOR_NORMAL"
+			if confirm
+			then
+				git checkout -b $BRANCH_IN
+			else
+				return 0;
+			fi
+		else
+			echo -e "$COLOR_INFO"
+			echo -e "Do you want to delete an existing branch ? $COLOR_NORMAL"
+			if confirm
+			then
+				echo -e "$COLOR_INFO"
+				echo -e "Please, enter a branch name to be deleted : $COLOR_NORMAL"
+				read BRANCH_IN
+				echo -e "$COLOR_INFO"
+				echo -e "You're about to delete branch named $BRANCH_IN, are you sure $COLOR_NORMAL?"
+				if confirm
+				then
+					if isDeleteBoth
+					then	
+						git branch -d $BRANCH_IN
+						git push origin :$BRANCH_IN
+					else
+						if isDeleteLocal
+						then
+							git branch -d $BRANCH_IN
+						else
+							if isDeleteRemote
+							then
+								git push origin :$BRANCH_IN
+							fi
+						fi
+					fi
+				else
+					return 0;
+				fi
+			else
+				return 0;
+			fi
+		fi
+		else
+		echo -e "$COLOR_FAILURE"
+		echo "This directory isn't a git repository."
+		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to create or delete branches."
 		echo -e "$COLOR_NORMAL"
 	fi
 }
@@ -853,5 +914,13 @@ while [ $LOOP -gt 0 ]; do
 	if isActionRm $ACTION
 	then
 		remove
+	fi
+	if isActionMv $ACTION
+	then
+		remove
+	fi
+	if isActionBranch $ACTION
+	then
+		branch
 	fi
 done
