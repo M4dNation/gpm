@@ -168,6 +168,10 @@ status()
 	fi
 }
 
+##
+# diff
+# This function is used in order to display current differences of the repository.
+##
 diff()
 {
 	OPTIONS=""
@@ -234,6 +238,92 @@ diff()
 	fi
 }
 
+add()
+{
+	if [ -d .git ]
+	then
+		OPTIONS=""
+		if isTrue $ADD_FORCE
+		then
+			OPTIONS="$OPTIONS --force"
+		fi
+		if isTrue $ADD_VERBOSE
+		then
+			OPTIONS="$OPTIONS --verbose"
+		fi
+		if isTrue $ADD_DRY
+		then
+			OPTIONS="$OPTIONS --dry-run"
+		fi
+		if isTrue $ADD_IGNORE_ERRORS
+		then
+			OPTIONS="$OPTIONS --ignore-errors"
+		fi
+		echo -e "$COLOR_INFO"
+		echo -e "You are about to add files to be commited. Would you like to see current branch' status first ? $COLOR_NORMAL"
+		if confirm 
+		then
+			status
+			echo -e "$COLOR_INFO"
+			echo -e "Would you like more detail about changes before adding files to be commited ? $NORMAL"
+			if confirm 
+			then
+				diff
+			fi
+		fi
+		if isTrue $ADD_ALL 
+		then
+			git add --all $OPTIONS
+			echo -e "$COLOR_INFO"
+			echo "Displaying tracked file:"
+			echo -e "-------------------------------------- $COLOR_NORMAL"
+			status
+			echo -e "$COLOR_SUCCESS"
+			echo -e "All files successfully added ! $COLOR_NORMAL"
+		else
+			FILENAME="FILENAME"
+			while [ "$FILENAME" != "" ]; 
+			do
+				echo -e "$COLOR_INFO"
+				echo -e "Please, enter the name of the file or directory you wish to add (no name to stop) : $NORMAL"
+				read FILENAME
+				if [ "$FILENAME" != "" ]
+				then
+					if [ -d "$FILENAME" ]
+					then
+						git add "$FILENAME" $OPTIONS
+						echo -e "$COLOR_SUCCESS"
+						echo -e "Directory $FILENAME successfully added ! $NORMAL"
+					else
+						if [ -e "$FILENAME" ]
+						then
+							git add "$FILENAME"
+							echo -e "$COLOR_SUCCESS"
+							echo -e "File $FILENAME successfully added ! $NORMAL"
+						else
+							echo -e "$COLOR_FAILURE"
+							echo "Unable to add $FILENAME, file or directory not found !"
+						fi
+					fi
+					echo -e "$COLOR_INFO"
+					echo -e "Would you like to see current branch' status now ? $NORMAL"
+					if confirm 
+					then
+						echo -e "$COLOR_INFO"
+						echo "Displaying tracked file:"
+						echo "--------------------------------------"
+						status
+					fi
+				fi
+			done
+		fi
+	else
+		echo -e "$COLOR_FAILURE"
+		echo "This directory isn't a git repository."
+		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to add."
+		echo -e "$COLOR_NORMAL"
+	fi
+}
 
 # Main Loop
 #################################################################################
@@ -262,5 +352,9 @@ while [ $LOOP -gt 0 ]; do
 	if isActionDiff $ACTION
 	then
 		diff
+	fi
+	if isActionAdd $ACTION
+	then
+		add
 	fi
 done
