@@ -731,6 +731,69 @@ remove()
 	fi
 }
 
+##
+# remove
+# This function is used in order to remove local repository files from working tree or index
+##
+move()
+{
+	if [ -d .git ]
+	then
+		OPTIONS=""
+		if isTrue $MOVE_FORCE
+		then
+			OPTIONS="$OPTIONS --force"
+		fi
+		if isTrue $MOVE_DRY
+		then
+			OPTIONS="$OPTIONS --dry-run"
+		fi
+		if isTrue $MOVE_VERBOSE
+		then
+			OPTIONS="$OPTIONS --verbose"
+		fi
+		echo -e "$COLOR_INFO"
+		echo -e "Do you want to rename a file or directory ? $COLOR_NORMAL"
+		if confirm
+		then
+			FILENAME="FILENAME"
+			while [ "$FILENAME" != "" ]; 
+			do
+				echo -e "$COLOR_INFO"
+				echo -e "Please, enter the name of the file you want to rename (no name to stop) : $NORMAL_COLOR"
+				read FILENAME
+				if [ "$FILENAME" != "" ]
+				then
+					echo -e "$COLOR_INFO"
+					echo -e "Please, enter new name: $NORMAL_COLOR"
+					read NAME
+					git mv $OPTIONS $FILENAME $NAME
+				fi
+			done
+		else
+			FILENAME="FILENAME"
+			while [ "$FILENAME" != "" ]; 
+			do
+				echo -e "$COLOR_INFO"
+				echo -e "Please, enter the name of the file you want to move (no name to stop) : $NORMAL_COLOR"
+				read FILENAME
+				if [ "$FILENAME" != "" ]
+				then
+					echo -e "$COLOR_INFO"
+					echo -e "Please, enter destination folder: $NORMAL_COLOR"
+					read FOLDER
+					git mv $OPTIONS $FILENAME $FOLDER
+				fi
+			done
+		fi
+	else
+		echo -e "$COLOR_FAILURE"
+		echo "This directory isn't a git repository."
+		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to clean."
+		echo -e "$COLOR_NORMAL"
+	fi
+}
+
 # Main Loop
 #################################################################################
 
