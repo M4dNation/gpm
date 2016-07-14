@@ -526,6 +526,6 @@ while [ $LOOP -gt 0 ]; do
 	fi
 	if isActionPull $ACTION
 	then
-		push
+		pull
 	fi
 done
