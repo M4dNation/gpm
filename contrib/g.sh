@@ -352,14 +352,15 @@ commit()
 		echo -e "$COLOR_INFO"
 		echo -e "Please, enter a commit description : $COLOR_NORMAL"
 		read COMMIT_DESCRIPTION
-		MESSAGE=`echo "\n$COMMIT_DESCRIPTION"`
+		MESSAGE=`echo -e "\n$COMMIT_DESCRIPTION"`
+		COMMIT_TITLE="$COMMIT_TITLE $MESSAGE";
 		add
 		echo -e "$COLOR_INFO"
 		echo "You are about to make a commit on your current branch."
 		echo -e "Would you like to see all information about the commit ? $COLOR_NORMAL"
 		if confirm 
 		then
-			echo "\nCommit TITLE"
+			echo -e "\nCommit Informations"
 			echo "--------------------------------------"
 			echo "$COMMIT_TITLE"
 			echo -e "\n $COMMIT_DESCRIPTION"
