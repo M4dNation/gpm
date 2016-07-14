@@ -885,11 +885,11 @@ checkout()
 			if confirm
 			then
 				commit
-				echo -e "$COLOR_INFO"
-				echo -e "Please enter a branch name: $COLOR_NORMAL"
-				read BRANCH_IN
-				git checkout $OPTIONS $BRANCH_IN
 			fi
+			echo -e "$COLOR_INFO"
+			echo -e "Please enter a branch name: $COLOR_NORMAL"
+			read BRANCH_IN
+			git checkout $OPTIONS $BRANCH_IN
 		else
 			return 0;
 		fi
