@@ -1018,7 +1018,7 @@ stash()
 
 ##
 # merge
-# This function is uded in order to merge a branch into another one
+# This function is used in order to merge a branch into another one
 ##
 merge()
 {
@@ -1052,6 +1052,52 @@ merge()
 		echo -e "$COLOR_FAILURE"
 		echo "This directory isn't a git repository."
 		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to merge."
+		echo -e "$COLOR_NORMAL"
+	fi
+}
+
+##
+# fetch
+# This function is used in order to fetch branches and tags from remote
+##
+fetch()
+{
+	if [ -d .git ]; 
+	then
+		OPTIONS=""
+		if isTrue $FETCH_ALL
+		then
+			OPTIONS="$OPTIONS --all"
+		fi
+		if isTrue $FETCH_FORCE
+		then
+			OPTIONS="$OPTIONS --force"
+		fi
+		if isTrue $FETCH_TAGS
+		then
+			OPTIONS="$OPTIONS --tags"
+		fi
+		if isTrue $FETCH_QUIET
+		then
+			OPTIONS="$OPTIONS --quiet"
+		fi
+		if isTrue $FETCH_VERBOSE
+		then
+			OPTIONS="$OPTIONS --verbose"
+		fi
+		if isTrue $FETCH_IPV4
+		then
+			OPTIONS="$OPTIONS --ipv4"
+		fi
+		if isTrue $FETCH_IPV6
+		then
+			OPTIONS="$OPTIONS --ipv6"
+		fi
+		git fetch $OPTIONS
+	else
+		echo -e "$COLOR_FAILURE"
+		echo "This directory isn't a git repository."
+		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to fetch."
 		echo -e "$COLOR_NORMAL"
 	fi
 }
@@ -1139,5 +1185,9 @@ while [ $LOOP -gt 0 ]; do
 	if isActionMerge $ACTION
 	then
 		merge
+	fi
+	if isActionFetch $ACTION
+	then
+		fetch
 	fi
 done
