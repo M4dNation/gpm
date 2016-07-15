@@ -926,15 +926,18 @@ tag()
 			echo -e "Please, enter a name for your tag : $COLOR_NORMAL"
 			read TAG_NAME
 			echo -e "$COLOR_INFO"
+			echo -e "Please, enter a message for your tag : $COLOR_NORMAL"
+			read TAG_MESSAGE
+			echo -e "$COLOR_INFO"
 			echo -e "You are about to create a new tag $TAG_NAME, do you wish to create it for this commit ? $COLOR_NORMAL"
 			if confirm
 			then
-				git tag $OPTIONS TAG_NAME
+				git tag $OPTIONS $TAG_NAME -m $TAG_MESSAGE 
 			else
 				echo -e "$COLOR_INFO"
 				echo -e "Then, please enter commit checksum for your tag: $COLOR_NORMAL"
 				read COMMIT_SUM
-				git tag $OPTIONS TAG_NAME COMMIT_SUM
+				git tag $OPTIONS $TAG_NAME $COMMIT_SUM
 			fi
 		else
 			echo -e "$COLOR_INFO"
