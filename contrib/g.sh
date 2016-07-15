@@ -937,7 +937,7 @@ tag()
 				echo -e "$COLOR_INFO"
 				echo -e "Then, please enter commit checksum for your tag: $COLOR_NORMAL"
 				read COMMIT_SUM
-				git tag $OPTIONS $TAG_NAME -m $COMMIT_SUM
+				git tag $OPTIONS -m $TAG_MESSAGE $TAG_NAME $COMMIT_SUM
 			fi
 		else
 			echo -e "$COLOR_INFO"
@@ -946,7 +946,7 @@ tag()
 			then
 				echo -e "$COLOR_INFO"
 				echo -e "Please, enter a tag name to be deleted : $COLOR_NORMAL"
-				read BRANCH_IN
+				read TAG_NAME
 				echo -e "$COLOR_INFO"
 				echo -e "You're about to delete tag named $TAG_NAME, are you sure $COLOR_NORMAL?"
 				if confirm
