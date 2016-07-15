@@ -910,13 +910,13 @@ tag()
 	if [ -d .git ]; 
 	then
 		OPTIONS=""
-		if isTrue $TAG_ANNOTATED
-		then
-			OPTIONS="$OPTIONS --annotate"
-		fi
 		if isTrue $TAG_FORCE
 		then
 			OPTIONS="$OPTIONS --force"
+		fi
+		if isTrue $TAG_ANNOTATED
+		then
+			OPTIONS="$OPTIONS -a"
 		fi
 		echo -e "$COLOR_INFO"
 		echo -e "Do you want to create a new tag ? $COLOR_NORMAL"
@@ -937,7 +937,7 @@ tag()
 				echo -e "$COLOR_INFO"
 				echo -e "Then, please enter commit checksum for your tag: $COLOR_NORMAL"
 				read COMMIT_SUM
-				git tag $OPTIONS $TAG_NAME $COMMIT_SUM
+				git tag $OPTIONS $TAG_NAME -m $COMMIT_SUM
 			fi
 		else
 			echo -e "$COLOR_INFO"
