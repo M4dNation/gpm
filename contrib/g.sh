@@ -1016,6 +1016,46 @@ stash()
 	fi
 }
 
+##
+# merge
+# This function is uded in order to merge a branch into another one
+##
+merge()
+{
+	if [ -d .git ]; 
+	then
+		OPTIONS=""
+		if isTrue $MERGE_QUIET
+		then
+			OPTIONS="$OPTIONS --quiet"
+		fi
+		if isTrue $MERGE_VERBOSE
+		then
+			OPTIONS="$OPTIONS --verbose"
+		fi
+		echo -e "$COLOR_INFO"
+		echo "You are actually on branch :"
+		echo -e "----------------------------------- $COLOR_NORMAL"
+		git branch
+		echo -e "$COLOR_INFO"
+		echo -e "Please, enter the branch you want to merge in your current branch: $COLOR_NORMAL"
+		read BRANCH_FROM
+		echo -e "$COLOR_INFO"
+		echo -e "You're about to merge branch $BRANCH_FROM into your current branch, are you sure $COLOR_NORMAL?"
+		if confirm 
+		then
+			git merge $OPTIONS $BRANCH_FROM
+		else
+			return 0;
+		fi
+	else
+		echo -e "$COLOR_FAILURE"
+		echo "This directory isn't a git repository."
+		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to merge."
+		echo -e "$COLOR_NORMAL"
+	fi
+}
+
 # Main Loop
 #################################################################################
 
@@ -1095,5 +1135,9 @@ while [ $LOOP -gt 0 ]; do
 	if isActionStash $ACTION
 	then
 		stash
+	fi
+	if isActionMerge $ACTION
+	then
+		merge
 	fi
 done
