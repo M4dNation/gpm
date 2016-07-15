@@ -981,6 +981,41 @@ tag()
 	fi
 }
 
+##
+# tag
+# This function is used in order to store temporarily work on branch
+##
+stash()
+{
+	if [ -d .git ]
+	then
+		echo -e "$COLOR_INFO"
+		echo -e "Do you want to store temporarily you work ? $COLOR_NORMAL"
+		if confirm
+		then
+			git stash
+			echo -e "$COLOR_SUCCESS"
+			echo -e "Content successfully stored ! $COLOR_NORMAL"
+		else
+			echo -e "$COLOR_INFO"
+			echo -e "Do you want to get a temporarily stored work ? $COLOR_NORMAL"
+			if confirm
+			then 
+				git stash pop
+				echo -e "$COLOR_SUCCESS"
+				echo -e "Content successfully poped back ! $COLOR_NORMAL"
+			else
+				return 0;
+			fi
+		fi
+	else
+		echo -e "$COLOR_FAILURE"
+		echo "This directory isn't a git repository."
+		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to stash."
+		echo -e "$COLOR_NORMAL"
+	fi
+}
+
 # Main Loop
 #################################################################################
 
@@ -1056,5 +1091,9 @@ while [ $LOOP -gt 0 ]; do
 	if isActionTag $ACTION
 	then
 		tag
+	fi
+	if isActionStash $ACTION
+	then
+		stash
 	fi
 done
