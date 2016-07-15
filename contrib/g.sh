@@ -901,6 +901,83 @@ checkout()
 	fi
 }
 
+##
+# tag
+# This function is used in order to add and delete tags on commits
+##
+tag()
+{
+	if [ -d .git ]; 
+	then
+		OPTIONS=""
+		if isTrue $TAG_ANNOTATED
+		then
+			OPTIONS="$OPTIONS --annotate"
+		fi
+		if isTrue $TAG_FORCE
+		then
+			OPTIONS="$OPTIONS --force"
+		fi
+		echo -e "$COLOR_INFO"
+		echo -e "Do you want to create a new tag ? $COLOR_NORMAL"
+		if confirm
+		then
+			echo -e "$COLOR_INFO"
+			echo -e "Please, enter a name for your tag : $COLOR_NORMAL"
+			read TAG_NAME
+			echo -e "$COLOR_INFO"
+			echo -e "You are about to create a new tag $TAG_NAME, do you wish to create it for this commit ? $COLOR_NORMAL"
+			if confirm
+			then
+				git tag $OPTIONS TAG_NAME
+			else
+				echo -e "$COLOR_INFO"
+				echo -e "Then, please enter commit checksum for your tag: $COLOR_NORMAL"
+				read COMMIT_SUM
+				git tag $OPTIONS TAG_NAME COMMIT_SUM
+			fi
+		else
+			echo -e "$COLOR_INFO"
+			echo -e "Do you want to delete an existing tag ? $COLOR_NORMAL"
+			if confirm
+			then
+				echo -e "$COLOR_INFO"
+				echo -e "Please, enter a tag name to be deleted : $COLOR_NORMAL"
+				read BRANCH_IN
+				echo -e "$COLOR_INFO"
+				echo -e "You're about to delete tag named $TAG_NAME, are you sure $COLOR_NORMAL?"
+				if confirm
+				then
+					if isTagDeleteBoth
+					then	
+						git tag -d $TAG_NAME
+						git push origin :$TAG_NAME
+					else
+						if isTagDeleteLocal
+						then
+							git tag -d $TAG_NAME
+						else
+							if isTagDeleteRemote
+							then
+								git push origin :$TAG_NAME
+							fi
+						fi
+					fi
+				else
+					return 0;
+				fi
+			else
+				return 0;
+			fi
+		fi
+	else
+		echo -e "$COLOR_FAILURE"
+		echo "This directory isn't a git repository."
+		echo -e "Please, create a git repository with the $COLOR_NORMAL init $COLOR_FAILURE command before any attempt to create or delete tags."
+		echo -e "$COLOR_NORMAL"
+	fi
+}
+
 # Main Loop
 #################################################################################
 
@@ -972,5 +1049,9 @@ while [ $LOOP -gt 0 ]; do
 	if isActionCheckout $ACTION
 	then
 		checkout
+	fi
+	if isActionTag $ACTION
+	then
+		tag
 	fi
 done
