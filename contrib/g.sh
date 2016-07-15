@@ -932,7 +932,7 @@ tag()
 			echo -e "You are about to create a new tag $TAG_NAME, do you wish to create it for this commit ? $COLOR_NORMAL"
 			if confirm
 			then
-				git tag $OPTIONS $TAG_NAME -m $TAG_MESSAGE 
+				git tag $OPTIONS -m $TAG_MESSAGE $TAG_NAME   
 			else
 				echo -e "$COLOR_INFO"
 				echo -e "Then, please enter commit checksum for your tag: $COLOR_NORMAL"
