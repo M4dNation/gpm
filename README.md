@@ -190,7 +190,7 @@ Version 1.0.0
 I also added many error handling inside previous and current functionnalities.
 A dedicated tutorial is also available in the **Functionnalities** section.
 
-Version 0.0.1 (13/05/2015)
+Version 0.0.1
 ----------------------------
 
 - Init
