@@ -53,6 +53,7 @@ For example, if you want to display logs of your repository, then use the follow
 
 	bash contrib/gpm.sh log
 or
+
 	./contrib/gpm.sh log
 
 You can enter the **help** command to see the list of any command available. 
@@ -97,23 +98,24 @@ The **init** command should be the first to be called when you start a project, 
 Besides, even if all commands will be available after **init** is called, you should call **config** just after your **init** call and make the configuration, avoiding many errors when git will be called.
 
 Just answer **config** when the script asks you what you want to do to configure your git repository.
-You will be asked to give your **author name** and your **email** to authenticate you in your git calling (such as commit for example).
-You will also be asked if you want to make this configuration either :
+The script will read your **author name** and your **email** from your configuration file to authenticate you in your git calling (such as commit for example).
+You can also make, if you want, this configuration either :
 
 - A global configuration
 - A system configuration
 
 If you choose to make your configuration a **global configuration**, your configuration will be put for all other git project used with this system session.
 If you choose to make your configuration a **system configuration**, your configuration will be put for the entire system.
-If neither the global nor the system configuration fits you for personal reasons, just answer "no" at both questions to make your configuration a **local configuration** for your project.
+If neither the global nor the system configuration fits you for personal reasons, just put **local** on the configuration file to make your configuration a **local configuration** for your project.
 
-I personnaly use a **global configuration**, considerating I don't have to change my naming during my git usage, no matter the project I work on.
+I personnaly use a **global configuration**, considerating I don't have to change my naming during my git usage, no matter the project I work on (but default is **local** inside the configuration file).
 
 #### Configuration remote functionnality
 
 You can skip this section if you don't want to use a remote website to handle your git information such as Github or Bitbucket (this would be a terrible mistake ! :) ).
 
-A lot of developers use remote website to handle their git configuration, in order to find informations the easiest way possible. The most known of this website is Github : www.github.com .
+A lot of developers use remote website to handle their git configuration, in order to find informations the easiest way possible. 
+The most known of this website is Github : http://github.com .
 
 To link your local repository with the remote one created on Github, you will need to use the **remote** command.
 First, GPM asks you if you want to see your current remote configuration. If you agree, it will show you both remotes name and URL, so you can be fully aware of what is your current configuration and what changes you wanna make.
