@@ -110,4 +110,12 @@ while [ $LOOP -gt 0 ]; do
 	then
 		revert
 	fi
+	if isActionBlame $ACTION
+	then
+		blame
+	fi
+	if isActionHelp $ACTION
+	then
+		help
+	fi
 done
