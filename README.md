@@ -91,8 +91,11 @@ and
 
     config
 
-Use the **init** command if you want to create a new git repository. You just need to confirm with the "yes" answer to create your repository.
-If everything runs well, a green confirmation should appear. If your folder is already a git repository, a red alert should inform you about it.
+Use the **init** command if you want to create a new git repository. 
+You just need to confirm with the "yes" answer to create your repository
+The second question is to set your repository as a bare repository, answer "no" if you just want to make a working repository.
+If everything runs well, a green confirmation should appear. 
+If your folder is already a git repository, a red alert should inform you about it.
 
 The **init** command should be the first to be called when you start a project, considering than any other command aren't going to be functional as long as your folder is not a git repository.
 Besides, even if all commands will be available after **init** is called, you should call **config** just after your **init** call and make the configuration, avoiding many errors when git will be called.
@@ -110,9 +113,12 @@ If neither the global nor the system configuration fits you for personal reasons
 
 I personnaly use a **global configuration**, considerating I don't have to change my naming during my git usage, no matter the project I work on (but default is **local** inside the configuration file).
 
+If you want to clone an already existing repository, you can use the **clone** command.
+It will ask you for the remote address of the repository, and then clone it wherever you want to.
+
 #### Configuration remote functionnality
 
-You can skip this section if you don't want to use a remote website to handle your git information such as Github or Bitbucket (this would be a terrible mistake ! :) ).
+You can skip this section if you don't want to use a remote website to handle your git information such as Github or Bitbucket (this would be a terrible mistake !).
 
 A lot of developers use remote website to handle their git configuration, in order to find informations the easiest way possible. 
 The most known of this website is Github : http://github.com .
@@ -136,7 +142,11 @@ Just enter the name and press enter key to see how magic it is.
 No parameter, no difficult command, you just commited and pushed stuff in one blow without any difficulties.
 
 Note that you can also pull some work from the remote branch using the **pull** command.
-Pull works the same way as push.
+Pull works the same way as **push**.
+
+During the **commit** process, GPM call another function named **add** in order to add modified file to the index of the git repository.
+Configuration about the **add** command can be made inside the configuration file.
+Of course, you can also call **add** manually if you want to. 
 
 ## CHANGELOG
 
