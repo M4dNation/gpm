@@ -11,9 +11,15 @@ source .gpm/.actions.cfg
 
 LOOP=1
 while [ $LOOP -gt 0 ]; do
-	echo -e "$COLOR_INFO"
-	echo -e "Welcome in the git project manager ! What do you want to do ? $COLOR_NORMAL"
-	read ACTION
+	if [ $# -eq 1 ]
+  	then
+    	ACTION="$1"
+    	LOOP=0
+	else
+		echo -e "$COLOR_INFO"
+		echo -e "Welcome in the git project manager ! What do you want to do ? $COLOR_NORMAL"
+		read ACTION
+	fi
 	if isActionInit $ACTION
 	then
 		init
@@ -117,5 +123,13 @@ while [ $LOOP -gt 0 ]; do
 	if isActionHelp $ACTION
 	then
 		help
+	fi
+	if isActionClear $ACTION
+	then
+		clear
+	fi
+	if isActionExit $ACTION
+	then
+		LOOP=0
 	fi
 done
