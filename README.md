@@ -7,7 +7,7 @@ with a question/answer configuration without knowing any command. Many functionn
 
 ## AUTHORS
 
-GPM is maintained by Axel Vaindal.
+GPM is maintained by Axel Vaindal & M4dNation's team.
 
 ## Contributors
 
@@ -21,7 +21,7 @@ GPM is available under the terms of the GNU GENERAL PUBLIC LICENSE. Check the li
 
 #### General information 
 
-Before anything, your project should have a **contrib** folder in which you have to put this **git.sh** script.
+Before anything, your project should have a **contrib** folder in which you have to put this **gpm.sh** script.
 By the way, you should always call this script from the root of your project folder.
 For example, if your project has the following tree organisation : 
 
@@ -30,26 +30,29 @@ For example, if your project has the following tree organisation :
 	- test 1
 	- test 2
 - contrib
+- folder1
 
 Then, remember that any call of the script from one of those folders will make the script use relatives links interprated from its calling location and not from the file location, as it's usually the case with any shell command.
 
 To launch the script, use the following command :
 
-    sh contrib/git.sh
+    bash contrib/gpm.sh
 or
     
-    ./contrib/git.sh
+    ./contrib/gpm.sh
 
 If any permission error occures, please use the following command to add execution write:
 
 	chmod +x contrib/git.sh
 
 If everything runs well, you should have a greeting in your shell interface and a question about the command you want to execute.
-Any execution must be confirmed with a "yes" answer, which is **case-sensitive**. Any other than a "yes or no" expected answer will be considered as a no.
+Any execution must be confirmed with a "yes" answer, which is **case-insensitive**. Any other than a "yes or no" expected answer will be considered as a no.
 
 You can enter the **help** command to see the list of any command available. You can also have a description of any command thanks to **help**.
 
-All error occured during the script are written in a **gerror.txt** file, which will always be put in the **contrib** folder (which is one of the reason you should apply previous advice about your project's configuration ;) ).
+GPM works thanks to a lot of functions available in the **.gpm** folder. You need to put this folder inside the root of your project (so **contrib** and **.gpm** are at the same level).
+
+Finally, the contrib folder as a **gpmconfig** folder which can be populate with **.gitconfig.cfg** which are the configuration files of GPM. You can have as many configuration files as you like in the folder, but remember that GPM always uses one configuration file at a time and the one must be named **.gitconfig.cfg**.
 
 #### Create and configurate
 
