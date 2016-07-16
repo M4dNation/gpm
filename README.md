@@ -25,12 +25,12 @@ Before anything, your project should have a **contrib** folder in which you have
 By the way, you should always call this script from the root of your project folder.
 For example, if your project has the following tree organisation : 
 
-- src
+- contrib
+	- gpm.sh
 - examples
 	- test 1
 	- test 2
-- contrib
-- folder1
+- src
 
 Then, remember that any call of the script from one of those folders will make the script use relatives links interprated from its calling location and not from the file location, as it's usually the case with any shell command.
 
@@ -48,11 +48,35 @@ If any permission error occures, please use the following command to add executi
 If everything runs well, you should have a greeting in your shell interface and a question about the command you want to execute.
 Any execution must be confirmed with a "yes" answer, which is **case-insensitive**. Any other than a "yes or no" expected answer will be considered as a no.
 
-You can enter the **help** command to see the list of any command available. You can also have a description of any command thanks to **help**.
+You can also give the script a parameter, which should be the command you want to execute.
+For example, if you want to display logs of your repository, then use the following:
 
-GPM works thanks to a lot of functions available in the **.gpm** folder. You need to put this folder inside the root of your project (so **contrib** and **.gpm** are at the same level).
+	bash contrib/gpm.sh log
+or
+	./contrib/gpm.sh log
 
-Finally, the contrib folder as a **gpmconfig** folder which can be populate with **.gitconfig.cfg** which are the configuration files of GPM. You can have as many configuration files as you like in the folder, but remember that GPM always uses one configuration file at a time and the one must be named **.gitconfig.cfg**.
+You can enter the **help** command to see the list of any command available. 
+You can also have a description of any command thanks to **help**.
+
+GPM works thanks to a lot of functions available in the **.gpm** folder. 
+You need to put this folder inside the root of your project (so **contrib** and **.gpm** are at the same level).
+
+Finally, the contrib folder as a **.gpmconfig** folder which can be populate with **.gitconfig.cfg** which are the configuration files of GPM.
+You can have as many configuration files as you like in the folder, but remember that GPM always uses one configuration file at a time and the used one must be named **.gitconfig.cfg**.
+
+Here is the final project organisation you should have:
+
+- contrib
+	- gpm.sh
+	- .gpmconfig
+		- .gitconfig.cfg
+- examples
+	- test 1
+	- test 2
+- .gpm
+	- .actions.cfg
+	- .functions.cfg
+- src
 
 #### Create and configurate
 
@@ -69,8 +93,8 @@ and
 Use the **init** command if you want to create a new git repository. You just need to confirm with the "yes" answer to create your repository.
 If everything runs well, a green confirmation should appear. If your folder is already a git repository, a red alert should inform you about it.
 
-The **init** command should be the first to be called when you start a project, considering than any other command aren't going to be functional until your folder isn't a git repository.
-Beside, even if all commands will be available after **init** is called, you should call **config** just after your **init** call and make the configuration, avoiding many errors when git will be called.
+The **init** command should be the first to be called when you start a project, considering than any other command aren't going to be functional as long as your folder is not a git repository.
+Besides, even if all commands will be available after **init** is called, you should call **config** just after your **init** call and make the configuration, avoiding many errors when git will be called.
 
 Just answer **config** when the script asks you what you want to do to configure your git repository.
 You will be asked to give your **author name** and your **email** to authenticate you in your git calling (such as commit for example).
