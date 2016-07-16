@@ -150,6 +150,17 @@ Of course, you can also call **add** manually if you want to.
 
 ## CHANGELOG
 
+Version 3.0.0
+----------------------------
+- Add configuration file
+- Split script files
+- Blame
+- Tag
+- Move
+- Remove
+- Stash
+- Fetch
+
 Version 2.0.0
 ----------------------------
 - Status
