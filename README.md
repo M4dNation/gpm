@@ -22,8 +22,8 @@ GPM is available under the terms of the GNU GENERAL PUBLIC LICENSE. Check the li
 
 #### General informations 
 
-Before anything, your project should have a **contrib** folder in which you have to put this **gpm.sh** script.
-By the way, you should always call this script from the root of your project folder.
+Before anything, your project should have a **contrib** folder in which you have to put this **gpm.sh** script.  
+By the way, you should always call this script from the root of your project folder.  
 For example, if your project has the following tree organisation : 
 
 - contrib
@@ -46,10 +46,11 @@ If any permission error occures, please use the following command to add executi
 
 	chmod +x contrib/git.sh
 
-If everything runs well, you should have a greeting in your shell interface and a question about the command you want to execute.
-Any execution must be confirmed with a "yes" answer, which is **case-insensitive**. Any other than a "yes or no" expected answer will be considered as a no.
+If everything runs well, you should have a greeting in your shell interface and a question about the command you want to execute.  
+Any execution must be confirmed with a "yes" answer, which is **case-insensitive**.  
+Any other than a "yes or no" expected answer will be considered as a no.
 
-You can also give the script a parameter, which should be the command you want to execute.
+You can also give the script a parameter, which should be the command you want to execute.  
 For example, if you want to display logs of your repository, then use the following:
 
 	bash contrib/gpm.sh log
@@ -57,14 +58,14 @@ or
 
 	./contrib/gpm.sh log
 
-You can enter the **help** command to see the list of any command available. 
-You can also have a description of any command thanks to **help**.
+You can enter the **help** command to see the list of any command available.  
+You can also have a description of any command thanks to **help**.  
 
-GPM works thanks to a lot of functions available in the **.gpm** folder. 
-You need to put this folder inside the root of your project (so **contrib** and **.gpm** are at the same level).
+GPM works thanks to a lot of functions available in the **.gpm** folder.  
+You need to put this folder inside the root of your project (so **contrib** and **.gpm** are at the same level).  
 
-Finally, the contrib folder as a **.gpmconfig** folder which can be populate with **name.gitconfig.cfg** files which are the configuration files of GPM.
-You can have as many configuration files as you like in the folder, but remember that GPM always uses one configuration file at a time which must be named **.gitconfig.cfg**.
+Finally, the contrib folder as a **.gpmconfig** folder which can be populate with **name.gitconfig.cfg** files which are the configuration files of GPM.  
+You can have as many configuration files as you like in the folder, but remember that GPM always uses one configuration file at a time which must be named **.gitconfig.cfg**.  
 
 Here is the final project organisation you should have:
 
@@ -84,7 +85,7 @@ Here is the final project organisation you should have:
 
 #### Create and configurate
 
-If your folder is already a git repository and is properly configured, you can skip this section and go to the next one.
+If your folder is already a git repository and is properly configured, you can skip this section and go to the next one.  
 However, if you have any doubt about your git configuration or if you project isn't in a repository yet, use the following explanations to make it.
 
 In this section, we will use two differents commands:
@@ -94,16 +95,16 @@ and
 
     bash contrib/gpm.sh config
 
-Use the **init** command if you want to create a new git repository. 
-You just need to confirm with the "yes" answer to create your repository
-The second question is to set your repository as a bare repository, answer "no" if you just want to make a working repository.
-If everything runs well, a green confirmation should appear. 
+Use the **init** command if you want to create a new git repository.   
+You just need to confirm with the "yes" answer to create your repository.  
+The second question is to set your repository as a bare repository, answer "no" if you just want to make a working repository.  
+If everything runs well, a green confirmation should appear.  
 If your folder is already a git repository, a red alert should inform you about it.
 
-The **init** command should be the first to be called when you start a project, considering than any other command aren't going to be functional as long as your folder is not a git repository.
+The **init** command should be the first to be called when you start a project, considering than any other command aren't going to be functional as long as your folder is not a git repository.  
 Besides, even if all commands will be available after **init** is called, you should call **config** just after your **init** call and make the configuration, avoiding many errors when git will be called.
 
-Use the **config** command if you want to configure your git repository.
+Use the **config** command if you want to configure your git repository.  
 The script will read your **name** and your **email** from your configuration file to authenticate you in your git calling (such as commit for example).
 You can also make, if you want, this configuration either :
 
