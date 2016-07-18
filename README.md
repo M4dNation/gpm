@@ -141,8 +141,9 @@ For example, if you want to add **origin** in your **test** repository, you shou
 to the first question, and:
 
 	https://github.com/Username/test.git
+to the second one.
 
-Note: You can also provide **ssh** URL based if you don't like remote configuration over https.
+Note: You can also provide **SSH** Based URL if you don't like remote configuration over HTTPS.
 
 #### GPM Basics
 
@@ -185,6 +186,7 @@ Of course, you can also call **add** manually if you want to.
 	bash contrib/gpm.sh add
 
 Once you have committed your work, you can display every commit made by using the **log** command.
+
 Configuration about the **log** command can be made inside the configuration file.
 
 	bash contrib/gpm.sh log
