@@ -2,8 +2,8 @@
 
 ## ABOUT
 
-GPM (Git Project Manager) is an utility entirely written in bash enabling Git repository configuration and source code versionning
-with a question/answer configuration without knowing any command. Many functionnalities are handled, please check the section called **Functionnalities** for more information.
+GPM (Git Project Manager) is an utility entirely written in bash enabling Git repository configuration and source code versionning with a question/answer configuration without knowing any command.  
+Many functionnalities are handled, please check the section called **Functionnalities** for more information.
 
 ## AUTHORS
 
@@ -11,7 +11,8 @@ GPM is maintained by Axel Vaindal & M4dNation's team.
 
 ## Contributors
 
-There is actually no other contributors for this project. If you want to contribute, feel free to make any suggestions you want or to contact me.
+There is actually no other contributors for this project.  
+If you want to contribute, feel free to make any suggestions you want or to contact me.
 
 ## LICENCE
 
@@ -185,8 +186,7 @@ Of course, you can also call **add** manually if you want to.
 
 	bash contrib/gpm.sh add
 
-Once you have committed your work, you can display every commit made by using the **log** command.
-
+Once you have committed your work, you can display every commit made by using the **log** command.  
 Configuration about the **log** command can be made inside the configuration file.
 
 	bash contrib/gpm.sh log
