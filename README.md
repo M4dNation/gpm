@@ -58,8 +58,8 @@ or
 
 	./contrib/gpm.sh log
 
-You can enter the **help** command to see the list of any command available.  
-You can also have a description of any command thanks to **help**.  
+You can enter the **help** command to see the list of all available commands.  
+You can also have a description of any command thanks to **help**.
 
 GPM works thanks to a lot of functions available in the **.gpm** folder.  
 You need to put this folder inside the root of your project (so **contrib** and **.gpm** are at the same level).  
@@ -126,7 +126,7 @@ Keep in mind that cloning an existing repository will also pull it's configurati
 
 You can skip this section if you don't want to use a remote website to handle your git information such as Github or Bitbucket (this would be a terrible mistake !).
 
-A lot of developers use remote website to handle their git configuration, in order to find informations the easiest way possible. 
+A lot of developers use remote website to handle their git configuration, in order to find informations the easiest way possible.  
 The most known of this website is Github : https://github.com .
 
 To link your local repository with the remote one created on Github, you will need to use the **remote** command.
@@ -166,23 +166,23 @@ To do so, you need to use the **commit** command.
 
 	bash contrib/gpm.sh commit
 
-Provide asked informations and GPM will ask you if you want to push your commit on a remote branch.
-If you do so, you must have configured a remote repository, as seen in the previous section.
+Provide asked informations and GPM will ask you if you want to push your commit on a remote branch.  
+If you do so, you must have configured a remote repository, as seen in the previous section.  
 You can also choose to push your commit manualy, using the **push** command.
 
 	bash contrib/gpm.sh push
 
-Either way, GPM will ask you to enter the remote branch name where it can push your commit to. 
-Just enter the name and press enter key to see how magic it is. 
-No parameter, no difficult command, you just commited and pushed stuff in one blow without any difficulties.
+Either way, GPM will ask you to enter the remote branch name where it can push your commit to.  
+Just enter the name and press enter key to see how magic it is.  
+No parameter, no difficult command, you just commited and pushed stuff in one blow without any difficulties.  
 
 Note that you can also pull some work from the remote branch using the **pull** command.
 Pull works the same way as **push**.
 
 	bash contrib/gpm.sh pull
 
-During the **commit** process, GPM calls another function named **add** in order to add modified file to the index of the git repository.
-Configuration about the **add** command can be made inside the configuration file.
+During the **commit** process, GPM calls another function named **add** in order to add modified file to the index of the git repository.  
+Configuration about the **add** command can be made inside the configuration file.  
 Of course, you can also call **add** manually if you want to.
 
 	bash contrib/gpm.sh add
